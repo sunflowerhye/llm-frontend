@@ -7,7 +7,7 @@ const toolbarStyle = {
     height: '90px',
     margin: '0', // 기본 마진으로 설정
     opacity: '1', // 보이게 하려면 1로 설정
-    background: '#ffffff',
+    background: '#FFF5F5',
     display: 'flex',
     justifyContent: 'center', // 중앙 정렬
     alignItems: 'center', // 수직 중앙 정렬 추가
@@ -42,10 +42,10 @@ const loginStyle = {
 
 const buttonStyle = {
     padding: '10px 10px', // 버튼 패딩
-    backgroundColor: '#007BFF', // 버튼 배경색
+    backgroundColor: '#3A3A3A', // 버튼 배경색
     color: '#ffffff', // 버튼 글자색
     border: 'none', // 테두리 없음
-    borderRadius: '5px', // 둥근 모서리
+    borderRadius: '6px', // 둥근 모서리
     cursor: 'pointer', // 포인터 커서
     fontSize: '16px', // 글자 크기    
 };

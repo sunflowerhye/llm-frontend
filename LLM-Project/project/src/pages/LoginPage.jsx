@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 
 const containerStyle = {
     width: '100%',
-    background: '#252B42', // StartPage와 동일한 배경색
+    background: '#FFF5F5', // StartPage와 동일한 배경색
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
@@ -14,7 +14,7 @@ const containerStyle = {
 
 const titleStyle = {
     fontSize: '32px',
-    color: '#ffffff',
+    color: '#3A3A3A',
     marginBottom: '20px',
 };
 

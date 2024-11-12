@@ -2,7 +2,7 @@ import React from 'react';
 
 const containerStyle = {
     width: '100%',
-    background: '#252B42', // 배경색
+    background: '#FFF5F5', // 배경색
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
@@ -14,7 +14,7 @@ const containerStyle = {
 
 const subtitleStyle = {
     fontSize: '15px',
-    color: '#ffffff',
+    color: '#3A3A3A',
     marginBottom: '15px',
 };
 
