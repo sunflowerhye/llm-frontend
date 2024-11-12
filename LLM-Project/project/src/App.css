@@ -1,19 +1,19 @@
 .App {
   text-align: center;
-}
-
-.App-logo {
+  }
+  
+  .App-logo {
   height: 40vmin;
   pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
   }
-}
-
-.App-header {
+  
+  @media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+  animation: App-logo-spin infinite 20s linear;
+  }
+  }
+  
+  .App-header {
   background-color: #282c34;
   min-height: 100vh;
   display: flex;
@@ -22,29 +22,41 @@
   justify-content: center;
   font-size: calc(10px + 2vmin);
   color: white;
-}
-
-.App-link {
+  }
+  
+  .App-link {
   color: #61dafb;
-}
-
-/* 아래에 링크 스타일 추가 */
-.link {
-  text-decoration: none; /* 밑줄 없애기 */
-  color: black; /* 기본 색상 */
-}
-
-.link:hover,
-.link:focus,
-.link:active {
+  }
+  
+ 
+  .link {
+  text-decoration: none; 
+  color: black; 
+  }
+  
+  .link:hover,
+  .link:focus,
+  .link:active {
   color: black; /* 호버, 포커스, 액티브 상태에서도 검정색 유지 */
-}
-
-@keyframes App-logo-spin {
+  }
+  
+  @keyframes App-logo-spin {
   from {
-    transform: rotate(0deg);
+  transform: rotate(0deg);
   }
   to {
-    transform: rotate(360deg);
+  transform: rotate(360deg);
   }
-}
+  }
+  
+  img {
+  width: 100%;
+  height: auto; /* 비율 유지 */
+  }
+  
+  .image-container {
+  background-image: url(/public/StartPage2.jpg);
+  background-size: cover;
+  background-position: center;
+  height: 100vh; 
+  }
