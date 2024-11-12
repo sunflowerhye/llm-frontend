@@ -47,9 +47,7 @@ const buttonStyle = {
     border: 'none', // 테두리 없음
     borderRadius: '6px', // 둥근 모서리
     cursor: 'pointer', // 포인터 커서
-    fontSize: '16px', // 글자 크기
-
-    
+    fontSize: '16px', // 글자 크기    
 };
 
 
@@ -68,7 +66,7 @@ function Bar() {
                 <Link to="/" className="link">Home</Link>
                 <Link to="/chatbot" className="link">Chatbot</Link>
                 <Link to="/pricing" className="link">Pricing</Link>
-                <Link to="/#contact" className="link">Contact</Link>
+                <Link to="/taskUI" className="link">TaskUI</Link>
 
                 <div style={loginStyle}>
                     <Link to="/login" className="link">Login</Link>

@@ -8,7 +8,10 @@ import PricingPage from './pages/PricingPage';
 import Section from './components/Section'; // 필요에 따라 사용
 import LoginPage from './pages/LoginPage';
 import SignupPage from './pages/SignupPage';
-
+import Task1Page from './pages/Task1Page';
+import Task2Page from './pages/Task2Page';
+import Task3Page from './pages/Task3Page';
+import TaskUI from './pages/TaskUI';
 
 function App() {
   return (
@@ -21,7 +24,11 @@ function App() {
           <Route path="/pricing" element={<PricingPage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/signup" element={<SignupPage/>} />
-          
+          <Route path="/taskUI" element={<TaskUI/>} />
+          <Route path="/task/1" element={<Task1Page/>} />
+          <Route path="/task/2" element={<Task2Page/>} />
+          <Route path="/task/3" element={<Task3Page/>} />
+
 
         </Routes>
         <Section /> {/* 필요 시 추가 */}
