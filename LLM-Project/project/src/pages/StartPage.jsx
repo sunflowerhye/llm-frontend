@@ -19,7 +19,6 @@ function StartPage() {
         <div style={containerStyle}>
             <Bar />
             <HeroSection />
-
             <Section>
                 <h2>Ask us a question!</h2>
                 <p>Feel free to reach out to us for any inquiries related to physics.</p>

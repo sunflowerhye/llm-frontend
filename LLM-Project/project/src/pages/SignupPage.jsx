@@ -51,7 +51,7 @@ const buttonStyle = {
 const SignupPage = () => {
     return (
         <div style={containerStyle}>
-            
+            {/* 백엔드 - 아이디, 비밀번호, 이메일 */}
             <h2 style={subtitleStyle}>회원 정보를 입력해 주세요</h2>
             <div style={formStyle}>
                 <input type="text" placeholder="아이디(이메일)" style={inputStyle} />
