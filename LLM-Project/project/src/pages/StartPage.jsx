@@ -48,7 +48,10 @@ function StartPage() {
             <Bar />
             <HeroSection />
 
-            <Section>
+            <div style={gradientSectionStyle1}>
+                <h2>Welcome to Task UI</h2>
+            </div>
+            <div style={gradientSectionStyle2}>
                 <h2>Ask us a question!</h2>
                 <p>Feel free to reach out to us for any inquiries related to physics.</p>
             </div>
