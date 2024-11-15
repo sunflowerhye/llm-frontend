@@ -34,6 +34,7 @@ function App() {
           <Route path="/chatbot2" element={<ChatbotPage2/>} />
 
 
+
         </Routes>
         <Section /> {/* 필요 시 추가 */}
       </div>

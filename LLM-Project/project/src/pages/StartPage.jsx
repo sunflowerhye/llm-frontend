@@ -3,6 +3,7 @@
 import React from 'react';
 import Bar from './Bar';
 import HeroSection from './HeroSection';
+import Product from './Product';
 
 const containerStyle = {
     width: '100%',
@@ -14,7 +15,9 @@ const containerStyle = {
 const gradientSectionStyle1 = {
     width: '100%',
     height: '100vh', // 각 섹션의 높이를 100vh로 설정
-    background: 'linear-gradient(135deg, #FFAF7B, #FFDA7B)', // 첫 번째 섹션 그라데이션
+    background: 'linear-gradient(180deg, #FFFFFF, #FFB3B3)',
+
+
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
@@ -48,7 +51,7 @@ function StartPage() {
             <HeroSection />
 
             <div style={gradientSectionStyle1}>
-                <h2>Welcome to Task UI</h2>
+                <Product />
             </div>
             <div style={gradientSectionStyle2}>
                 <h2>Ask us a question!</h2>
