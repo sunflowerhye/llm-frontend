@@ -1,0 +1,74 @@
+.task-ui {
+  font-family: 'Poppins', Arial, sans-serif;
+  background: linear-gradient(to bottom right, #FFF5F5, #FFEEEE);
+  padding: 40px;
+  max-width: 1200px;
+  margin: auto;
+  text-align: center;
+}
+
+.task-ui-header {
+  margin-bottom: 50px;
+}
+
+.task-ui-header h1 {
+  font-size: 2.8em;
+  color: #333;
+}
+
+.task-ui-header p {
+  font-size: 1.3em;
+  color: #666;
+}
+
+.task-ui-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 30px;
+}
+
+.task-card {
+  background-color: white;
+  border: 1px solid #ddd;
+  border-radius: 15px;
+  padding: 25px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  text-align: left;
+}
+
+.task-card:hover {
+  transform: scale(1.02);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+}
+
+.task-icon {
+  font-size: 3em;
+  margin-bottom: 15px;
+}
+
+.task-card h2 {
+  font-size: 1.6em;
+  margin-bottom: 15px;
+  color: #011429;
+}
+
+.task-card p {
+  font-size: 1.1em;
+  color: #555;
+  line-height: 1.5;
+}
+
+.task-add-button {
+  margin-top: 25px;
+  padding: 15px 30px;
+  font-size: 1.1em;
+  background-color: #333;
+  color: white;
+  border-radius: 8px;
+  transition: background-color 0.3s ease;
+}
+
+.task-add-button:hover {
+  background-color: #555;
+}

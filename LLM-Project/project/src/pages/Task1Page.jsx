@@ -3,6 +3,7 @@ import axios from 'axios';
 import './Task1Page.css';
 
 const Task1Page = () => {
+
   const [formData, setFormData] = useState({
     companyName: '',
     productName: '',
@@ -41,7 +42,7 @@ const Task1Page = () => {
         max_tokens: 500,
       }, {
         headers: {
-          'Authorization': `Bearer `, // 여기에 OpenAI API 키 입력
+          'Authorization': `Bearer ${process.env.REACT_APP_OPENAI_API_KEY}`,
           'Content-Type': 'application/json',
         },
       });

@@ -1,6 +1,7 @@
 import React from 'react';
 
 import { Link, useNavigate } from 'react-router-dom'; // Link 임포트
+import logo from '../img/logo.png';
 
 const toolbarStyle = {
     width: '100%', // 전체 너비를 차지하도록 설정
@@ -16,12 +17,12 @@ const toolbarStyle = {
     left: '0', // 왼쪽에 맞추도록 설정
     padding: '0 80px', // 좌우 패딩 추가
     boxSizing: 'border-box', // 패딩이 전체 너비에 포함되도록 설정
+    zIndex: '1000',
 };
 
 const logoStyle = {
-    fontSize: '40px', // 로고 글자 크기
-    fontWeight: 'bold', // 글자 두께
-    fontFamily: 'Poppins, sans-serif', // 폰트 적용
+    height: '60px', // 이미지 높이를 줄입니다 (필요에 따라 값 조절 가능)
+    width: 'auto',  // 비율을 유지하면서 너비 자동 설정
 };
 
 const menuStyle = {
@@ -61,7 +62,9 @@ function Bar() {
 
     return (
         <div style={toolbarStyle}>
-            <div style={logoStyle}>HansungUnv</div> {/* 로고 */}
+            <Link to="/">
+                <img src={logo} alt="HansungUnv Logo" style={logoStyle} />
+            </Link>
                 <div style={menuStyle}>
                 <Link to="/" className="link">Home</Link>
                 <Link to="/chatbot" className="link">Chatbot</Link>
@@ -71,7 +74,7 @@ function Bar() {
                 <div style={loginStyle}>
                     <Link to="/login" className="link">Login</Link>
                         <div style={buttonStyle}>
-                        <button style={buttonStyle} onClick={handleSignUp}>Become a member ➡️</button>
+                        <button style={buttonStyle} onClick={handleSignUp}>Become a member</button>
                         </div>
                     </div>
                     

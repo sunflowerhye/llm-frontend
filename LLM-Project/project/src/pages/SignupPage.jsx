@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useState } from 'react';
+
 
 const containerStyle = {
     width: '100%',
@@ -48,27 +49,72 @@ const buttonStyle = {
 };
 
 
-const SignupPage = () => {
+function SignupPage() {
+    const [username, setUsername] = useState('');
+    const [password, setPassword] = useState('');
+    const [confirmPassword, setConfirmPassword] = useState('');
+    const [email, setEmail] = useState('');
+  
+    const handleSignup = async (e) => {
+      e.preventDefault();
+  
+      if (password !== confirmPassword) {
+        alert("비밀번호가 일치하지 않습니다.");
+        return;
+      }
+  
+      const res = await fetch('http://3.37.44.224:5000/signup', {  // 백엔드 URL에 맞게 수정
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ username, password, email }),
+      });
+  
+      const data = await res.json();
+      if (res.status === 201) {
+        alert("회원가입이 완료되었습니다.");
+      } else {
+        alert(data.error);
+      }
+    };
+  
     return (
-        <div style={containerStyle}>
-            {/* 백엔드 - 아이디, 비밀번호, 이메일 */}
-            <h2 style={subtitleStyle}>회원 정보를 입력해 주세요</h2>
-            <div style={formStyle}>
-                <input type="text" placeholder="아이디(이메일)" style={inputStyle} />
-                <div style={{ height: '5px' }} /> 
-                <input type="password" placeholder="비밀번호" style={inputStyle} />
-                <div style={{ height: '5px' }} /> 
-                <input type="password" placeholder="비밀번호 확인" style={inputStyle} />
-                <div style={{ height: '5px' }} /> 
-                <input type="text" placeholder="이름" style={inputStyle} />
-                <div style={{ height: '5px' }} /> 
-                <input type="text" placeholder="전화번호" style={inputStyle} />
-                <div style={{ height: '10px' }} /> 
-                
-            </div>
-                <button style={buttonStyle}>회원가입하기</button>
+      <div style={containerStyle}>
+        <h2 style={subtitleStyle}>회원 정보를 입력해 주세요</h2>
+        <div style={formStyle}>
+          <input 
+            type="text" 
+            placeholder="아이디" 
+            style={inputStyle}
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+          />
+          <input 
+            type="password" 
+            placeholder="비밀번호" 
+            style={inputStyle}
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+          <input 
+            type="password" 
+            placeholder="비밀번호 확인" 
+            style={inputStyle}
+            value={confirmPassword}
+            onChange={(e) => setConfirmPassword(e.target.value)}
+          />
+          <input 
+            type="email" 
+            placeholder="이메일" 
+            style={inputStyle}
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+          <button style={buttonStyle} onClick={handleSignup}>회원가입하기</button>
         </div>
+      </div>
     );
-};
-
-export default SignupPage;
+  }
+  
+  export default SignupPage;
