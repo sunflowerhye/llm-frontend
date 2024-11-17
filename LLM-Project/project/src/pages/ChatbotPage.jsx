@@ -1,73 +1,71 @@
-import React, { useState, useEffect } from 'react';
-import './chat.css';
+import React, { useState } from "react";
+import "./Chatbot.css";
 
-const ChatbotPage = () => {
-  const [message, setMessage] = useState('');
-  const [chatHistory, setChatHistory] = useState([]);
-  const [error, setError] = useState('');
-  const token = localStorage.getItem('access_token');
+function ChatbotPage() {
+  const [messages, setMessages] = useState([]);
+  const [inputValue, setInputValue] = useState("");
+  const [isSidebarVisible, setIsSidebarVisible] = useState(true); // 사이드바 상태 관리
 
-  const sendMessage = async () => {
-    if (!message.trim()) return;
-
-    try {
-      const response = await fetch('http://localhost:5000/chat', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify({ message }),
-      });
-
-      const data = await response.json();
-
-      if (response.ok) {
-        setChatHistory((prev) => [
-          ...prev,
-          { type: 'user', text: message },
-          { type: 'gpt', text: data.response },
-        ]);
-        setMessage('');
-      } else {
-        setError(data.error || '오류가 발생했습니다.');
-      }
-    } catch (error) {
-      setError('서버 연결에 실패했습니다.');
+  const handleSendMessage = () => {
+    if (inputValue.trim()) {
+      setMessages([...messages, inputValue]);
+      setInputValue("");
     }
   };
 
-  useEffect(() => {
-    // 기존 대화 기록을 로드
-  }, []);
+  const toggleSidebar = () => {
+    setIsSidebarVisible(!isSidebarVisible); // 사이드바 토글
+  };
 
   return (
-    <div className="chat-page">
-      <div className="chat-container">
-        <h2>Beauty Chatbot</h2>
-        <div className="chat-history">
-          {chatHistory.map((entry, index) => (
+    <div className="chatbot-container">
+      {isSidebarVisible && (
+        <div className="sidebar">
+          <h2>Beauty Chatbot</h2>
+          <nav>
+            <ul>
+              <li>과거 채팅 목록</li>
+              {/**/}
+            </ul>
+          </nav>
+        </div>
+      )}
+
+      <div className="main-content">
+      <div className="header">
+          <button className="toggle-button" onClick={toggleSidebar}>
+            {isSidebarVisible ? "🡸" : "🡺"}
+          </button>
+          <h1 className="header-title">Beauty Chatbot</h1>
+        </div>
+
+        <p className="highlight">
+          지금 <span className="highlight-blue">Beauty Chatbot</span>과 대화해 보세요.
+        </p>
+
+        <div className="chat-section">
+          {messages.map((msg, index) => (
             <div
               key={index}
-              className={entry.type === 'user' ? 'user-message' : 'gpt-message'}
+              className={`chat-message ${index % 2 === 0 ? "chat-left" : "chat-right"}`}
             >
-              {entry.text}
+              {msg}
             </div>
           ))}
         </div>
+
         <div className="chat-input">
           <input
             type="text"
-            value={message}
-            onChange={(e) => setMessage(e.target.value)}
-            placeholder="메시지를 입력하세요"
+            value={inputValue}
+            onChange={(e) => setInputValue(e.target.value)}
+            placeholder="메시지를 입력하세요..."
           />
-          <button onClick={sendMessage}>전송</button>
+          <button onClick={handleSendMessage}>전송</button>
         </div>
-        {error && <p className="error">{error}</p>}
       </div>
     </div>
   );
-};
+}
 
 export default ChatbotPage;

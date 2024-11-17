@@ -8,7 +8,8 @@ const toolbarStyle = {
     height: '90px',
     margin: '0',
     opacity: '1',
-    background: '#FFF5F5',
+    // 기존 핑크 색상 background: '#FFF5F5',
+    background: '#FFFFFF',
     display: 'flex',
     justifyContent: 'space-between', // 양쪽 정렬
     alignItems: 'center',
