@@ -1,25 +1,20 @@
 import React, { useState, useEffect } from 'react';
 
-
-const heroStyle = {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    justifyContent: 'center',
-    height: '100vh',
-    width: '100vw', // 추가
-    textAlign: 'center',
-    backgroundImage: 'url(/StartPage2.jpg)', // 이미지 경로
-    backgroundSize: 'cover', // 이미지가 화면을 가득 채우도록 설정
-    backgroundPosition: 'center', // 이미지 중앙 정렬
-    backgroundRepeat: 'no-repeat', // 이미지 반복 방지
-    color: '#3A3A3A',
-};
+// 배경 이미지 배열
+// 일단 이 부분에는 홍보글처럼 들어갈 예정인데 우선 사진으로 첨부해둠 
+const images = [
+    '/StartPage1.jpg',
+    '/StartPage2.jpg',
+    '/StartPage3.jpg',
+    // 추가 이미지 경로를 여기에 넣어주세요s
+];
 
 const titleStyle = {
-    fontSize: '3rem', // 기본 폰트 크기 (더 크게 설정)
+    fontSize: '4rem', // 기본 폰트 크기 (더 크게 설정)
     marginTop: '80px', // 바와의 간격 추가
+    color: '#000000', // 검정색으로 설정
     marginBottom: '30px', // 아래쪽 여백 추가
+    fontFamily: 'Great Vibes, cursive',
 };
 
 const paragraphStyle = {
@@ -33,8 +28,6 @@ const cardContainerStyle = {
     overflow: 'hidden', // 카드가 컨테이너를 넘어가면 보이지 않도록 설정
     width: '100%',
     position: 'relative',
-    
-
 };
 
 
@@ -49,15 +42,12 @@ const cardStyle = {
     boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
     transition: 'transform 0.5s ease',
     position: 'relative', // 카드의 position을 relative로 변경
-
 };
 
 const iconStyle = {
     fontSize: '40px',
     marginBottom: '10px',
 };
-
-
 
 const cardData = [
     {
@@ -86,25 +76,36 @@ const cardData = [
     },
 ];
 
-
 function HeroSection() {
-
-    const [currentIndex, setCurrentIndex] = useState(0);
-
-    const nextCard = () => {
-        setCurrentIndex((prevIndex) => (prevIndex + 1) % cardData.length);
-    };
+    const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
     useEffect(() => {
-        const interval = setInterval(nextCard, 3000); // 3초마다 카드 변경
+        const interval = setInterval(() => {
+            setCurrentImageIndex((prevIndex) => (prevIndex + 1) % images.length);
+        }, 5000); // 5초마다 배경 변경
         return () => clearInterval(interval); // 클린업 함수
     }, []);
 
+    const heroStyle = {
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
+        height: '100vh',
+        width: '100vw',
+        textAlign: 'center',
+        backgroundImage: `url(${images[currentImageIndex]})`, // 현재 배경 이미지 설정
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundRepeat: 'no-repeat',
+        color: '#3A3A3A',
+        transition: 'background-image 1s ease-in-out', // 부드러운 전환 효과
+    };
 
     return (
         <div style={heroStyle}>
-            <h1 style={titleStyle}>Task UI</h1>
-            <p style={paragraphStyle}>We know how large objects will act, but things on a small scale just do not act that way.</p>
+            <h3 style={titleStyle}>Beauty Sync</h3>
+            <p style={paragraphStyle}>당신의 피부를 지킬 수 있는 유일한 방법</p>
             <button style={{ padding: '15px 30px', backgroundColor: '#007BFF', color: '#ffffff', border: 'none', borderRadius: '5px', marginBottom: '150px' }}>
                 Join Us
             </button>
@@ -115,7 +116,6 @@ function HeroSection() {
                         style={{
                             ...cardStyle,
                             backgroundColor: card.backgroundColor,
-                            transform: `translateX(${(index - currentIndex) * 100}%)`,
                         }}
                     >
                         <div style={iconStyle}>{card.icon}</div>
@@ -125,7 +125,6 @@ function HeroSection() {
                 ))}
             </div>
         </div>
-        
     );
 }
 

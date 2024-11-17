@@ -40,6 +40,8 @@
   color: black; /* 호버, 포커스, 액티브 상태에서도 검정색 유지 */
   }
   
+
+
   @keyframes App-logo-spin {
   from {
   transform: rotate(0deg);
@@ -58,5 +60,5 @@
   background-image: url(/public/StartPage2.jpg);
   background-size: cover;
   background-position: center;
-  height: 100vh; 
+  height: 100vh;  
   }
