@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-
+import { useNavigate } from 'react-router-dom';
 
 const containerStyle = {
     width: '100%',
@@ -54,7 +54,8 @@ function SignupPage() {
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
     const [email, setEmail] = useState('');
-  
+    const navigate = useNavigate();
+    
     const handleSignup = async (e) => {
       e.preventDefault();
   
@@ -63,7 +64,7 @@ function SignupPage() {
         return;
       }
   
-      const res = await fetch('http://3.37.44.224:5000/signup', {  // 백엔드 URL에 맞게 수정
+      const res = await fetch('http://localhost:5000/signup', {  // 백엔드 URL에 맞게 수정
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -74,6 +75,7 @@ function SignupPage() {
       const data = await res.json();
       if (res.status === 201) {
         alert("회원가입이 완료되었습니다.");
+        navigate('/');
       } else {
         alert(data.error);
       }

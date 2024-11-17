@@ -1,0 +1,81 @@
+.chat-page {
+  margin: 0; /* 여백 제거 */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #f0f0f0; /* 배경색 */
+  height: calc(100vh - 90px); /* 전체 화면에서 메뉴바 높이를 제외한 영역 */
+  overflow: hidden; /* 스크롤 숨기기 */
+}
+
+.chat-container {
+  width: 100%;
+  max-width: 600px; /* 최대 너비 제한 */
+  background: #ffffff;
+  color: #333;
+  display: flex;
+  flex-direction: column;
+  height: 80%; /* 컨테이너의 높이 조정 */
+  padding: 20px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  box-sizing: border-box;
+}
+
+.chat-history {
+  flex: 1;
+  overflow-y: auto; /* 채팅 기록이 많을 때만 스크롤 */
+  margin: 10px 0;
+  padding: 10px;
+  background: #f5f5f5;
+  border-radius: 8px;
+}
+
+
+.user-message {
+  text-align: right;
+  background: #a9e2ff; /* 사용자 메시지 색상 */
+  border-radius: 8px;
+  padding: 10px;
+  margin: 5px 0;
+}
+
+.gpt-message {
+  text-align: left;
+  background: #c9c9c9; /* GPT 메시지 색상 */
+  border-radius: 8px;
+  padding: 10px;
+  margin: 5px 0;
+}
+
+.chat-input {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px; /* 입력 영역과 채팅 기록의 간격을 높임 */
+}
+
+input[type="text"] {
+  flex: 1;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-right: 10px;
+}
+
+button {
+  padding: 10px 20px;
+  background: #01244a; /* 버튼 색상 */
+  border: none;
+  border-radius: 4px;
+  color: white;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #0056b3; /* 버튼 호버 색상 */
+}
+
+.error {
+  color: red;
+  text-align: center;
+}

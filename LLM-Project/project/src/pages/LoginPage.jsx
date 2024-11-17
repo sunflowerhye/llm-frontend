@@ -57,7 +57,7 @@ function LoginPage({ setToken }) {
     const handleLogin = async (e) => {
       e.preventDefault();
   
-      const res = await fetch('http://3.37.44.224:5000/login', {  // 백엔드 URL에 맞게 수정
+      const res = await fetch('http://localhost:5000/login', {  // 백엔드 URL에 맞게 수정
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
