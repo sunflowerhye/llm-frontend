@@ -3,7 +3,6 @@
 import React from 'react';
 import Bar from './Bar';
 import HeroSection from './HeroSection';
-import Section from '../components/Section'; // 경로 확인
 
 const containerStyle = {
     width: '100%',

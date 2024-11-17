@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 const containerStyle = {
@@ -49,25 +49,53 @@ const signUpButtonStyle = {
     color: '#000000',
 };
 
-const LoginPage = () => {
-
-    const navigate = useNavigate(); // useNavigate 훅 사용
-
-    const handleSignUp = () => {
-        navigate('/signup'); // 회원가입 페이지로 이동
+function LoginPage({ setToken }) {
+    const [username, setUsername] = useState('');
+    const [password, setPassword] = useState('');
+    const navigate = useNavigate();
+  
+    const handleLogin = async (e) => {
+      e.preventDefault();
+  
+      const res = await fetch('http://localhost:5000/login', {  // 백엔드 URL에 맞게 수정
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ username, password }),
+      });
+  
+      const data = await res.json();
+      if (res.status === 200) {
+        setToken(data.access_token);
+        alert('로그인 성공!');
+        navigate('/dashboard');  // 로그인 후 대시보드 페이지로 이동
+      } else {
+        alert(data.error);
+      }
     };
+  
     return (
-        <div style={containerStyle}>
-            <h1 style={titleStyle}>HansungUnv</h1>
-            <div style={{ height: '40px' }} /> {/* 간격을 위한 빈 div */}
-            <input type="text" placeholder="아이디" style={inputStyle} />
-            <input type="password" placeholder="비밀번호" style={inputStyle} />
-            <div style={{ height: '30px' }} /> 
-            <button style={loginButtonStyle}>로그인</button>
-            <button style={signUpButtonStyle} onClick={handleSignUp}>회원가입</button>
-        </div>
+      <div style={containerStyle}>
+        <h1 style={titleStyle}>HansungUnv</h1>
+        <input 
+          type="text" 
+          placeholder="아이디" 
+          style={inputStyle}
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
+        />
+        <input 
+          type="password" 
+          placeholder="비밀번호" 
+          style={inputStyle}
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+        />
+        <button style={loginButtonStyle} onClick={handleLogin}>로그인</button>
+        <button style={signUpButtonStyle} onClick={() => navigate('/signup')}>회원가입</button>
+      </div>
     );
-};
-
-export default LoginPage;
-
+  }
+  
+  export default LoginPage;

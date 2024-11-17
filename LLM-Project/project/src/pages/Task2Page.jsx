@@ -58,14 +58,6 @@ const Task2Page = () => {
       const translatedColor = await translateText(formData.color); 
      
       const response = await axios.post('https://api.openai.com/v1/images/generations', {
-        //prompt: `나는 화장품을 광고하는 회사를 운영하고 있어. 회사 이름은 ${formData.companyName}이고 홍보할 화장품은 ${formData.product}이야. ${formData.product}을 홍보할 배너를 생성해줄 수 있어? 내가 강조하고 싶은 키워드는 ${formData.keywords}이야. 색은 ${formData.color}색이었으면 좋겠어`,
-        // n: 1,
-        // size: '1024x1024',
-        // prompt: `Create a luxurious banner ad for a ${formData.product} by ${formData.companyName}. Focus on the concept of "${formData.keywords}" to highlight the hydration and radiance of the product. Use ${formData.color} as the primary color, adding a fresh, dewy effect with water droplet visuals and subtle highlights. The banner should be elegant and minimalistic, enhancing the luxurious feel and highlighting the glow effect.`,
-        //prompt: `I run a cosmetics advertising company. The company name is "${formData.companyName}", and the product I am promoting is a "${formData.product}". Could you create a banner to advertise the "${formData.product}"? The key concept I want to emphasize is '"${formData.keywords}",' and I would prefer the color to be "${formData.color}".`,
-        //prompt: `I run a cosmetics company named "${formData.companyName}". I'm promoting is a "${formData.product}". Create a luxurious, high-resolution banner that highlights "${formData.keywords}" using a ${formData.color} theme. The design should be sleek and polished, suitable for premium advertising.`,
-        //prompt: `Create a luxury skincare advertisement for the brand CHANEL. The product is a moisturizing cream focusing on the concept of "radiant glow" and "hydration". Use a light yellow color scheme to give a soft and fresh feel. Incorporate water droplets to symbolize moisture. The banner should look elegant, minimalistic, and premium.`,
-        //prompt: `Create a luxury advertisement banner for the brand "${formData.companyName}". The product being promoted is called "${formData.productName}" and is known for its "${formData.productInfo}". The design should incorporate a visual element symbolizing its effect, such as "${formData.symbol}". Use the color "${formData.color}" as the main theme to create a cohesive, fresh, and appealing look. The banner should highlight the following key message: "${formData.keywords}". Ensure that the design is elegant, minimalistic, and premium, and make the advertisement size ${formData.size}.`,
         prompt: `Create a luxury advertisement banner for the brand "${translatedCompanyName}". 
         The product being promoted is called "${translatedProductName}"
          and is known for its "${translatedProductInfo}".
@@ -77,7 +69,7 @@ const Task2Page = () => {
         size: '512x512',
       }, {
         headers: {
-          'Authorization': `Bearer `,
+          'Authorization': `Bearer ${process.env.REACT_APP_OPENAI_API_KEY}`,
           'Content-Type': 'application/json',
         },
       });

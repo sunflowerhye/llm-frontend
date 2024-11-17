@@ -45,7 +45,7 @@ const Task3Page = () => {
         max_tokens: 1500,
       }, {
         headers: {
-          'Authorization': `Bearer `, // 여기에 OpenAI API 키 입력
+          'Authorization': `Bearer ${process.env.REACT_APP_OPENAI_API_KEY}`,
           'Content-Type': 'application/json',
         },
       });
@@ -62,13 +62,12 @@ const Task3Page = () => {
   const handleDownload = async () => {
     if (!generatedInfo) return;
 
-    // Split the generated text into paragraphs for better formatting
     const paragraphs = generatedInfo.split('\n').map((line) => 
       new Paragraph({
         children: [
           new TextRun(line.trim()),
         ],
-        spacing: { after: 300 }, // Adds spacing after each paragraph
+        spacing: { after: 300 }, 
       })
     );
 
@@ -80,10 +79,8 @@ const Task3Page = () => {
       ],
     });
 
-    // Convert the document to a Blob
     const blob = await Packer.toBlob(doc);
 
-    // Use file-saver to trigger the download
     saveAs(blob, 'generated_info.docx');
   };
 
