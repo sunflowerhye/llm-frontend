@@ -1,8 +1,15 @@
-.task-ui {
+/* .task-ui {
   font-family: 'Poppins', Arial, sans-serif;
   background: linear-gradient(to bottom right, #FFF5F5, #FFEEEE);
   padding: 40px;
   max-width: 1200px;
+  margin: auto;
+  text-align: center;
+} */
+.task-ui {
+  font-family: 'Poppins', Arial, sans-serif;
+  background: linear-gradient(to bottom right, #def2fa, #FFEEEE);
+  padding: 40px;
   margin: auto;
   text-align: center;
 }

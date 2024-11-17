@@ -13,8 +13,6 @@ import Task2Page from './pages/Task2Page';
 import Task3Page from './pages/Task3Page';
 import TaskUI from './pages/TaskUI';
 
-import ChatbotPage2 from './pages/ChatbotPage2';
-
 function App() {
   return (
     <Router> {/* Router로 감싸기 */}
@@ -30,9 +28,6 @@ function App() {
           <Route path="/task/1" element={<Task1Page/>} />
           <Route path="/task/2" element={<Task2Page/>} />
           <Route path="/task/3" element={<Task3Page/>} />
-
-          <Route path="/chatbot2" element={<ChatbotPage2/>} />
-
 
 
         </Routes>
