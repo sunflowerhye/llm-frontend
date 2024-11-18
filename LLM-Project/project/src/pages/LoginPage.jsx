@@ -1,52 +1,57 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import logo from '../img/logo.png';
+
 
 const containerStyle = {
-    width: '100%',
-    background: '#FFF5F5', // StartPage와 동일한 배경색
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    justifyContent: 'center', // 수직 중앙 정렬
-    height: '100vh', // 전체 화면 높이
-};
-
-
-const titleStyle = {
-    fontSize: '32px',
-    color: '#3A3A3A',
-    marginBottom: '20px',
+  width: '100%',
+  background: '#f1f1f1', 
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'center',
+  justifyContent: 'flex-start',
+  padding: '100px', // 여유 공간 조정
+  boxSizing: 'border-box',
+  minHeight: '100vh',
 };
 
 const inputStyle = {
     width: '350px',
-    padding: '20px',
-    margin: '10px 0',
-    borderRadius: '5px',
-    border: '1px solid #cccccc',
+    padding: '15px', // 패딩 조정
+    margin: '10px 0', // 간격 조정
+    borderRadius: '10px',
+    border: '1px solid #B0BEC5',
     fontSize: '16px',
 };
 
 const buttonStyle = {
     width: '390px',
-    padding: '18px',
+    padding: '15px',
     margin: '10px 0',
-    borderRadius: '5px',
+    borderRadius: '10px',
     border: 'none',
     cursor: 'pointer',
     fontSize: '16px',
+    transition: 'background-color 0.3s',
 };
 
 const loginButtonStyle = {
     ...buttonStyle,
-    backgroundColor: '#B07F7F', // 로그인 버튼 색상
+    backgroundColor: '#3A3A3A', // 로그인 버튼 색상
     color: '#ffffff',
 };
 
 const signUpButtonStyle = {
     ...buttonStyle,
-    backgroundColor: '#B07F7F', // 회원가입 버튼 색상
+    backgroundColor: '#00ff0000', // 회원가입 버튼 색상
     color: '#000000',
+    border: '2px solid #000000'
+};
+
+const logoStyle = {
+    height: '60px',
+    width: 'auto',
+    marginBottom: '20px', // 로고와 폼 간격 조정
 };
 
 function LoginPage({ setToken }) {
@@ -55,47 +60,63 @@ function LoginPage({ setToken }) {
     const navigate = useNavigate();
   
     const handleLogin = async (e) => {
-      e.preventDefault();
+        e.preventDefault();
   
-      const res = await fetch('http://localhost:5000/login', {  // 백엔드 URL에 맞게 수정
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ username, password }),
-      });
+        const res = await fetch('/api/login', {  // 백엔드 URL에 맞게 수정
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ username, password }),
+        });
   
-      const data = await res.json();
-      if (res.status === 200) {
-        setToken(data.access_token);
-        alert('로그인 성공!');
-        navigate('/dashboard');  // 로그인 후 대시보드 페이지로 이동
-      } else {
-        alert(data.error);
-      }
+        const data = await res.json();
+        if (res.status === 200) {
+            setToken(data.access_token);
+            alert('로그인 성공!');
+            navigate('/dashboard');  // 로그인 후 대시보드 페이지로 이동
+        } else {
+            alert(data.error);
+        }
     };
   
     return (
-      <div style={containerStyle}>
-        <h1 style={titleStyle}>HansungUnv</h1>
-        <input 
-          type="text" 
-          placeholder="아이디" 
-          style={inputStyle}
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-        />
-        <input 
-          type="password" 
-          placeholder="비밀번호" 
-          style={inputStyle}
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
-        <button style={loginButtonStyle} onClick={handleLogin}>로그인</button>
-        <button style={signUpButtonStyle} onClick={() => navigate('/signup')}>회원가입</button>
-      </div>
+        <div style={containerStyle}>
+            <Link to="/">
+                    <img src={logo} alt="HansungUnv Logo" style={logoStyle} />
+            </Link>
+            <input 
+                type="text" 
+                placeholder="아이디" 
+                style={inputStyle}
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+            />
+            <input 
+                type="password" 
+                placeholder="비밀번호" 
+                style={inputStyle}
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+            />
+            <button 
+                style={loginButtonStyle} 
+                onClick={handleLogin}
+                onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#ababab'} // 호버 효과
+                onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#3A3A3A'}
+            >
+                로그인
+            </button>
+            <button 
+                style={signUpButtonStyle} 
+                onClick={() => navigate('/signup')}
+                onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#dcdcdc'} // 호버 효과
+                onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#00ff0000'}
+            >
+                회원가입
+            </button>
+        </div>
     );
-  }
+}
   
-  export default LoginPage;
+export default LoginPage;

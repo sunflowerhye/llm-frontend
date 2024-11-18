@@ -126,7 +126,7 @@ const Task1Page = () => {
   //   </div>
   // );
   return (
-    <div className="container">
+    <div className="task-container">
       <div className="form-container">
         {Object.keys(formData).map((key) => (
           <div className="form-group" key={key}>

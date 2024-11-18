@@ -1,15 +1,15 @@
 import React from 'react';
 
-import { Link, useNavigate } from 'react-router-dom'; // Link 임포트
+import { Link, useNavigate, useLocation } from 'react-router-dom'; // Link 임포트
 import logo from '../img/logo.png';
 
-const toolbarStyle = {
+const toolbarStyle = (isAuthPage) => ({
     width: '100%',
     height: '90px',
     margin: '0',
     opacity: '1',
     // 기존 핑크 색상 background: '#FFF5F5',
-    background: '#FFFFFF',
+    background: isAuthPage ? '#f1f1f1' : '#FFFFFF', 
     display: 'flex',
     justifyContent: 'space-between', // 양쪽 정렬
     alignItems: 'center',
@@ -19,7 +19,7 @@ const toolbarStyle = {
     padding: '0 5%', // 패딩을 %로 설정
     boxSizing: 'border-box',
     zIndex: '1000',
-};
+});
 
 const logoStyle = {
     height: '60px',
@@ -50,26 +50,34 @@ const buttonStyle = {
 
 function Bar() {
     const navigate = useNavigate();
+    const location = useLocation();
 
     const handleSignUp = () => {
         navigate('/signup');
     };
 
+    // 현재 경로가 로그인 또는 회원가입 페이지인지 확인
+    const isAuthPage = location.pathname === '/login' || location.pathname === '/signup';
+
     return (
-        <div style={toolbarStyle}>
-            <Link to="/">
-                <img src={logo} alt="HansungUnv Logo" style={logoStyle} />
-            </Link>
-            <div style={menuStyle}>
-                <Link to="/" className="link">Home</Link>
-                <Link to="/chatbot" className="link">Chatbot</Link>
-                <Link to="/pricing" className="link">Pricing</Link>
-                <Link to="/taskUI" className="link">TaskUI</Link>
-            </div>
-            <div style={loginStyle}>
-                <Link to="/login" className="link">Login</Link>
-                <button style={buttonStyle} onClick={handleSignUp}>Become a member</button>
-            </div>
+        <div style={toolbarStyle(isAuthPage)}>
+            {!isAuthPage && (
+                <>
+                    <Link to="/">
+                        <img src={logo} alt="HansungUnv Logo" style={logoStyle} />
+                    </Link>
+                    <div style={menuStyle}>
+                        <Link to="/" className="link">Home</Link>
+                        <Link to="/chatbot" className="link">Chatbot</Link>
+                        <Link to="/pricing" className="link">Pricing</Link>
+                        <Link to="/taskUI" className="link">TaskUI</Link>
+                    </div>
+                    <div style={loginStyle}>
+                        <Link to="/login" className="link">Login</Link>
+                        <button style={buttonStyle} onClick={handleSignUp}>Become a member</button>
+                    </div>
+                </>
+            )}
         </div>
     );
 }

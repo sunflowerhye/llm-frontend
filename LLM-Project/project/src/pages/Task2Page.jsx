@@ -96,7 +96,7 @@ const Task2Page = () => {
   };
 
   return (
-    <div className="container">
+    <div className="task-container">
       <div className="form-container">
         <div className="form-group">
           <label>회사명</label>
