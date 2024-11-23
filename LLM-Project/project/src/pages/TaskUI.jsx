@@ -1,6 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import './TaskUI2.css';
+import '../css/TaskUI.css';
 
 const TaskUI = () => {
   const navigate = useNavigate();

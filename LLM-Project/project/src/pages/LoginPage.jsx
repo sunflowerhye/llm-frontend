@@ -2,17 +2,16 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import logo from '../img/logo.png';
 
-
 const containerStyle = {
-  width: '100%',
-  background: '#f1f1f1', 
-  display: 'flex',
-  flexDirection: 'column',
-  alignItems: 'center',
-  justifyContent: 'flex-start',
-  padding: '100px', // 여유 공간 조정
-  boxSizing: 'border-box',
-  minHeight: '100vh',
+    width: '100%',
+    background: '#f1f1f1',
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'flex-start',
+    padding: '100px', // 여유 공간 조정
+    boxSizing: 'border-box',
+    minHeight: '100vh',
 };
 
 const inputStyle = {
@@ -58,10 +57,10 @@ function LoginPage({ setToken }) {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const navigate = useNavigate();
-  
+
     const handleLogin = async (e) => {
         e.preventDefault();
-  
+
         const res = await fetch('/api/login', {  // 백엔드 URL에 맞게 수정
             method: 'POST',
             headers: {
@@ -69,21 +68,27 @@ function LoginPage({ setToken }) {
             },
             body: JSON.stringify({ username, password }),
         });
-  
+
         const data = await res.json();
         if (res.status === 200) {
+            console.log('로그인 성공:', data.access_token); // 추가된 로그
             setToken(data.access_token);
-            alert('로그인 성공!');
-            navigate('/dashboard');  // 로그인 후 대시보드 페이지로 이동
+            navigate('/');  // 로그인 후 홈 페이지로 이동
         } else {
             alert(data.error);
         }
     };
-  
+
+    const handleKeyPress = (e) => {
+        if (e.key === 'Enter') {
+            handleLogin(e);  // Enter 키가 눌리면 로그인 처리
+        }
+    };
+
     return (
         <div style={containerStyle}>
             <Link to="/">
-                    <img src={logo} alt="HansungUnv Logo" style={logoStyle} />
+                <img src={logo} alt="HansungUnv Logo" style={logoStyle} />
             </Link>
             <input 
                 type="text" 
@@ -91,6 +96,7 @@ function LoginPage({ setToken }) {
                 style={inputStyle}
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
+                onKeyPress={handleKeyPress} // 엔터 키 눌렀을 때 로그인
             />
             <input 
                 type="password" 
@@ -98,6 +104,7 @@ function LoginPage({ setToken }) {
                 style={inputStyle}
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
+                onKeyPress={handleKeyPress} // 엔터 키 눌렀을 때 로그인
             />
             <button 
                 style={loginButtonStyle} 
@@ -118,5 +125,5 @@ function LoginPage({ setToken }) {
         </div>
     );
 }
-  
+
 export default LoginPage;

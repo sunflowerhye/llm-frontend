@@ -8,6 +8,11 @@
     display: flex;
 }
 
+.delete-button img {
+    width: 20px;
+    height: 25px;
+}
+
 /* Sidebar */
 .sidebar {
     width: 200px;
@@ -27,6 +32,27 @@
 
 .sidebar nav li {
     margin-bottom: 15px;
+    display: flex; /* flexbox로 설정 */
+    justify-content: space-between; /* 요소 간격 분리 */
+    align-items: center; /* 세로 중앙 정렬 */
+}
+
+.sidebar nav li span {
+    flex: 1; /* 제목이 남은 공간 차지 */
+    cursor: pointer; /* 커서 포인터로 변경 */
+    text-align: left; /* 텍스트 왼쪽 정렬 */
+}
+
+.sidebar nav li .delete-button {
+    margin-left: 10px; /* 삭제 버튼과 제목 간격 */
+    background: none;
+    border: none;
+    cursor: pointer;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 /* Toggle Button */
@@ -44,6 +70,31 @@
 
 .toggle-button:hover {
     background-color: #6d6d6d;
+}
+
+/* Header with Button - 제목 가운데 정렬, 버튼 오른쪽 정렬 */
+.header-with-button {
+    display: flex;
+    align-items: center; /* 세로로 가운데 정렬 */
+    justify-content: center; /* 제목을 가운데로 정렬 */
+    position: relative; /* 버튼을 절대 위치로 배치하기 위해 필요 */
+    width: 100%;
+    margin-bottom: 20px; /* 제목과 다른 요소들 사이 간격 */
+}
+
+.header-with-button .new-chat-button {
+    position: absolute;
+    right: 0px;  /* 버튼을 오른쪽 끝에 배치 */
+    background: none;
+    border: none;
+    cursor: pointer;
+    width: 35px;
+    height: 35px;
+}
+
+.header-with-button h2 {
+    text-align: center; /* 제목 가운데 정렬 */
+    margin: 0;
 }
 
 /* Main Content */

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { translate } from '@vitalets/google-translate-api';
-import './Task1Page.css';
+import '../css/TaskPage.css';
 
 const Task2Page = () => {
   // const [formData, setFormData] = useState({

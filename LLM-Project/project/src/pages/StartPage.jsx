@@ -44,12 +44,11 @@ const gradientSectionStyle3 = {
     color: '#FFF',
 };
 
-function StartPage() {
+function StartPage({ isLoggedIn, setToken }) {
     return (
         <div style={containerStyle}>
-            <Bar />
+            <Bar isLoggedIn={isLoggedIn} setToken={setToken} /> {/* props 추가 */}
             <HeroSection />
-
             <div style={gradientSectionStyle1}>
                 <Product />
             </div>
