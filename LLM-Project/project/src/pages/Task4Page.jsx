@@ -4,14 +4,13 @@ import { saveAs } from 'file-saver';
 import { Document, Packer, Paragraph, TextRun } from 'docx';
 import '../css/TaskPage.css';
 
-const Task1Page = () => {
-
+const Task4Page = () => {
   const [formData, setFormData] = useState({
-    companyName: '',
-    productName: '',
-    productInfo: '',
-    keywords: '',
-    targetAudience: '',
+    goal: '', // 목표
+    strategy: '', // 전략
+    targetAudience: '', // 타겟층
+    budget: '', // 예산
+    
   });
 
   const [generatedInfo, setGeneratedInfo] = useState('');
@@ -31,27 +30,27 @@ const Task1Page = () => {
   const handleGenerate = async () => {
     setLoading(true);
     try {
-      const response = await axios.post('https://api.openai.com/v1/chat/completions', {
-        model: 'gpt-4',
-        messages: [
-          {
-            role: 'user',
-            content: `회사의 이름은 "${formData.companyName}"이고, 
-              제품 이름은 "${formData.productName}"이며, 
-              성분 정보는 "${formData.productInfo}"입니다. 
-              홍보 키워드는 "${formData.keywords}"이고, 
-              타겟 대상은 "${formData.targetAudience}"입니다. 
-            이 정보를 바탕으로 제품을 홍보하는 문구를 만들어 주세요.
-            추가 파일 내용: ${fileContent}`,
-          },
-        ],
-        max_tokens: 500,
-      }, {
-        headers: {
-          'Authorization': `Bearer ${process.env.REACT_APP_OPENAI_API_KEY}`,
-          'Content-Type': 'application/json',
+      const response = await axios.post(
+        'https://api.openai.com/v1/chat/completions',
+        {
+          model: 'gpt-4',
+          messages: [
+            {
+              role: 'user',
+            //   content: `
+            //    추가 파일 내용: ${fileContent}
+            //   `,
+            },
+          ],
+          max_tokens: 1500,
         },
-      });
+        {
+          headers: {
+            Authorization: `Bearer ${process.env.REACT_APP_OPENAI_API_KEY}`,
+            'Content-Type': 'application/json',
+          },
+        }
+      );
 
       setGeneratedInfo(response.data.choices[0].message.content);
     } catch (error) {
@@ -62,19 +61,7 @@ const Task1Page = () => {
     }
   };
 
-  // const handleDownload = () => {
-  //   const blob = new Blob([generatedInfo], { type: 'text/plain' });
-  //   const url = URL.createObjectURL(blob);
-  //   const a = document.createElement('a');
-  //   a.href = url;
-  //   a.download = 'generated_info.txt'; // 다운로드할 파일 이름
-  //   document.body.appendChild(a);
-  //   a.click();
-  //   document.body.removeChild(a);
-  //   URL.revokeObjectURL(url);
-  // };
-
-  // 파일 업로드 처리
+ // 파일 업로드 처리
 const handleFileUpload = (e) => {
   const file = e.target.files[0];
   if (file) {
@@ -141,48 +128,29 @@ const handleDrop = (e) => {
     setFileContent(''); // 파일 내용 초기화
     setFileName('');    // 파일 이름 초기화
   };
+
   
   return (
     <div className="task-container">
       <div className="form-container">
-      <div className="form-group">
-          <label>회사명</label>
+        <div className="form-group">
+          <label>목표</label>
           <input
             type="text"
-            name="companyName"
-            value={formData.companyName}
+            name="goal"
+            value={formData.goal}
             onChange={handleChange}
-            placeholder="회사명을 입력하세요"
+            placeholder="목표를 입력하세요"
           />
         </div>
         <div className="form-group">
-          <label>제품명</label>
+          <label>전략</label>
           <input
             type="text"
-            name="productName"
-            value={formData.productName}
+            name="strategy"
+            value={formData.strategy}
             onChange={handleChange}
-            placeholder="제품명을 입력하세요"
-          />
-        </div>
-        <div className="form-group">
-          <label>제품 정보</label>
-          <input
-            type="text"
-            name="productInfo"
-            value={formData.productInfo}
-            onChange={handleChange}
-            placeholder="제품의 기능 및 성분을 입력하세요"
-          />
-        </div>
-        <div className="form-group">
-          <label>키워드</label>
-          <input
-            type="text"
-            name="keywords"
-            value={formData.keywords}
-            onChange={handleChange}
-            placeholder="강조하고 싶은 키워드를 입력하세요"
+            placeholder="전략을 입력하세요"
           />
         </div>
         <div className="form-group">
@@ -190,12 +158,22 @@ const handleDrop = (e) => {
           <input
             type="text"
             name="targetAudience"
-            value={formData.color}
+            value={formData.targetAudience}
             onChange={handleChange}
-            placeholder="타겟 대상을 입력하세요"
+            placeholder="타겟층을 입력하세요"
           />
         </div>
         <div className="form-group">
+          <label>예산</label>
+          <input
+            type="text"
+            name="budget"
+            value={formData.budget}
+            onChange={handleChange}
+            placeholder="예산을 입력하세요"
+          />
+        </div>
+      <div className="form-group">
         {/* 드래그 앤 드롭 영역 */}
         <label>파일 첨부</label>
         <div
@@ -251,12 +229,13 @@ const handleDrop = (e) => {
           />
         </div>
       </div>
+
         <button className="generate-button" onClick={handleGenerate} disabled={loading}>
           {loading ? '생성 중...' : '자동 생성'}
         </button>
       </div>
       <div className="info-container">
-        <h2>홍보 문구</h2>
+        <h2>생성된 기획안</h2>
         <div className="generated-info">{generatedInfo || '자동 생성 버튼을 눌러주세요!'}</div>
         <button className="download-button" onClick={handleDownload} disabled={!generatedInfo}>
           파일 다운로드
@@ -266,4 +245,4 @@ const handleDrop = (e) => {
   );
 };
 
-export default Task1Page;
+export default Task4Page;

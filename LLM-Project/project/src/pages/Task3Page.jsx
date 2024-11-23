@@ -2,14 +2,14 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { saveAs } from 'file-saver';
 import { Document, Packer, Paragraph, TextRun } from 'docx';
-import './Task1Page.css';
+import '../css/TaskPage.css';
 
 const Task3Page = () => {
   const [formData, setFormData] = useState({
-    goal: '',
-    strategy: '',
-    targetAudience: '',
-    budget: '',
+    goal: '', // 목표
+    strategy: '', // 전략
+    targetAudience: '', // 타겟층
+    budget: '', // 예산
   });
 
   const [generatedInfo, setGeneratedInfo] = useState('');
@@ -26,29 +26,33 @@ const Task3Page = () => {
   const handleGenerate = async () => {
     setLoading(true);
     try {
-      const response = await axios.post('https://api.openai.com/v1/chat/completions', {
-        model: 'gpt-4',
-        messages: [
-          {
-            role: 'user',
-            content: `
-            홍보 기획안 작성:
-                - 목표: ${formData.goal}
-                - 전략: ${formData.strategy}
-                - 타겟층: ${formData.targetAudience}
-                - 예산: ${formData.budget}
+      const response = await axios.post(
+        'https://api.openai.com/v1/chat/completions',
+        {
+          model: 'gpt-4',
+          messages: [
+            {
+              role: 'user',
+              content: `
+              홍보 기획안 작성:
+                  - 목표: ${formData.goal}
+                  - 전략: ${formData.strategy}
+                  - 타겟층: ${formData.targetAudience}
+                  - 예산: ${formData.budget}
 
-                이 정보를 바탕으로 제품 홍보를 위한 기획안을 작성해줘.
-            `,
-          },
-        ],
-        max_tokens: 1500,
-      }, {
-        headers: {
-          'Authorization': `Bearer ${process.env.REACT_APP_OPENAI_API_KEY}`,
-          'Content-Type': 'application/json',
+                  이 정보를 바탕으로 제품 홍보를 위한 기획안을 작성해줘.
+              `,
+            },
+          ],
+          max_tokens: 1500,
         },
-      });
+        {
+          headers: {
+            Authorization: `Bearer ${process.env.REACT_APP_OPENAI_API_KEY}`,
+            'Content-Type': 'application/json',
+          },
+        }
+      );
 
       setGeneratedInfo(response.data.choices[0].message.content);
     } catch (error) {
@@ -62,12 +66,10 @@ const Task3Page = () => {
   const handleDownload = async () => {
     if (!generatedInfo) return;
 
-    const paragraphs = generatedInfo.split('\n').map((line) => 
+    const paragraphs = generatedInfo.split('\n').map((line) =>
       new Paragraph({
-        children: [
-          new TextRun(line.trim()),
-        ],
-        spacing: { after: 300 }, 
+        children: [new TextRun(line.trim())],
+        spacing: { after: 300 },
       })
     );
 
@@ -85,20 +87,48 @@ const Task3Page = () => {
   };
 
   return (
-    <div className="container">
+    <div className="task-container">
       <div className="form-container">
-        {Object.keys(formData).map((key) => (
-          <div className="form-group" key={key}>
-            <label>{key.replace(/([A-Z])/g, ' $1').replace(/^./, (str) => str.toUpperCase())}</label>
-            <input
-              type="text"
-              name={key}
-              value={formData[key]}
-              onChange={handleChange}
-              placeholder="입력하세요"
-            />
-          </div>
-        ))}
+        <div className="form-group">
+          <label>목표</label>
+          <input
+            type="text"
+            name="goal"
+            value={formData.goal}
+            onChange={handleChange}
+            placeholder="목표를 입력하세요"
+          />
+        </div>
+        <div className="form-group">
+          <label>전략</label>
+          <input
+            type="text"
+            name="strategy"
+            value={formData.strategy}
+            onChange={handleChange}
+            placeholder="전략을 입력하세요"
+          />
+        </div>
+        <div className="form-group">
+          <label>타겟 대상</label>
+          <input
+            type="text"
+            name="targetAudience"
+            value={formData.targetAudience}
+            onChange={handleChange}
+            placeholder="타겟층을 입력하세요"
+          />
+        </div>
+        <div className="form-group">
+          <label>예산</label>
+          <input
+            type="text"
+            name="budget"
+            value={formData.budget}
+            onChange={handleChange}
+            placeholder="예산을 입력하세요"
+          />
+        </div>
         <button className="generate-button" onClick={handleGenerate} disabled={loading}>
           {loading ? '생성 중...' : '자동 생성'}
         </button>

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { translate } from '@vitalets/google-translate-api';
-import './Task1Page.css';
+import '../css/TaskPage.css';
 
 const Task2Page = () => {
   // const [formData, setFormData] = useState({
@@ -96,7 +96,7 @@ const Task2Page = () => {
   };
 
   return (
-    <div className="container">
+    <div className="task-container">
       <div className="form-container">
         <div className="form-group">
           <label>회사명</label>
