@@ -160,32 +160,58 @@ function ChatbotPage() {
     <div className="chatbot-container">
       {isSidebarVisible && (
         <div className="sidebar">
-          <nav>
-            <ul>
-              <li className="header-with-button">
-                <h2 className="title">채팅 목록</h2>
-                <button className="new-chat-button" onClick={handleStartNewConversation}>
-                  <img src={newchat} alt="새 대화 시작" />
-                </button>
-              </li>
-              {Array.isArray(history) && history.length > 0 ? (
-                history.map((item) => (
-                  <li key={item.id}>
-                    <span onClick={() => handleConversationClick(item.id)}>{item.title}</span>
-                    <button
-                      className="delete-button"
-                      onClick={() => handleDeleteConversation(item.id)}
-                    >
-                      <img src={deleteicon} alt="삭제" />
-                    </button>
-                  </li>
-                ))
-              ) : (
-                <li>채팅 기록이 없습니다.</li>
-              )}
-            </ul>
-          </nav>
-        </div>
+        <nav>
+          {/* 타이틀과 버튼 고정 */}
+          <div className="header-with-button">
+            <h2 className="title">채팅 목록</h2>
+            <button className="new-chat-button" onClick={handleStartNewConversation}>
+              <img src={newchat} alt="새 대화 시작" />
+            </button>
+          </div>
+          {/* 스크롤이 적용될 영역
+          <ul>
+            {Array.isArray(history) && history.length > 0 ? (
+              history.map((item) => (
+                <li key={item.id}>
+                  <span onClick={() => handleConversationClick(item.id)}>{item.title}</span>
+                  <button
+                    className="delete-button"
+                    onClick={() => handleDeleteConversation(item.id)}
+                  >
+                    <img src={deleteicon} alt="삭제" />
+                  </button>
+                </li>
+              ))
+            ) : (
+              <li>채팅 기록이 없습니다.</li>
+            )}
+             */}
+             {/* 스크롤 가능한 영역 */}
+          <ul className="history-list">
+            {Array.isArray(history) && history.length > 0 ? (
+              history.map((item) => (
+                <li key={item.id} className={`history-item ${selectedConversation === item.id ? "active" : ""}`}>
+                  {/* 채팅 제목 클릭 시 상세보기 */}
+                  <div className="history-title" onClick={() => handleConversationClick(item.id)}>
+                    {item.title}
+                  </div>
+
+                  {/* 삭제 버튼 */}
+                  <button
+                    className="delete-button"
+                    onClick={() => handleDeleteConversation(item.id)}
+                    title="대화 삭제"
+                  >
+                    <img src={deleteicon} alt="삭제" />
+                  </button>
+                </li>
+              ))
+            ) : (
+              <li className="empty-history">채팅 기록이 없습니다.</li>
+            )}
+          </ul>
+        </nav>
+      </div>      
       )}
 
       <div className="main-content">
@@ -220,6 +246,11 @@ function ChatbotPage() {
             type="text"
             value={inputValue}
             onChange={(e) => setInputValue(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                handleSendMessage(); // Enter 키를 누르면 메시지 전송
+              }
+            }}
             placeholder="Ask me about beauty tips or skincare advice..."
           />
           <button onClick={handleSendMessage}>Send</button>
