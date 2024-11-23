@@ -1,16 +1,15 @@
 import React, { useState, useEffect } from "react";
 import "../css/Chatbot.css";
-import newchat from '../img/newchat.png';
-import deleteicon from '../img/delete.png';
+import newchat from "../img/newchat.png";
+import deleteicon from "../img/delete.png";
 
 function ChatbotPage() {
-  const [messages, setMessages] = useState([]); // 현재 대화 메시지
+  const [messages, setMessages] = useState([]);
   const [inputValue, setInputValue] = useState("");
   const [isSidebarVisible, setIsSidebarVisible] = useState(true);
   const [isInitialMessageVisible, setIsInitialMessageVisible] = useState(true);
-  const [history, setHistory] = useState([]); // 과거 대화 기록
+  const [history, setHistory] = useState([]);
   const [selectedConversation, setSelectedConversation] = useState(null);
-  const [tempTitle, setTempTitle] = useState(""); // 임시 제목 저장
 
   const fetchHistory = async () => {
     const token = localStorage.getItem("token");
@@ -45,9 +44,12 @@ function ChatbotPage() {
 
   const handleSendMessage = async () => {
     if (inputValue.trim()) {
-      const newMessages = [{ sender: "user", text: inputValue }];
-      setMessages((prevMessages) => [...prevMessages, ...newMessages]);
-      setIsInitialMessageVisible(false); // 문구 사라지도록 설정
+      // 사용자 메시지를 먼저 추가
+      const userMessage = { sender: "user", text: inputValue };
+      setMessages((prevMessages) => [...prevMessages, userMessage]);
+  
+      setInputValue(""); // 메시지를 전송한 직후 입력 필드 초기화
+      setIsInitialMessageVisible(false);
   
       try {
         const response = await fetch("/api/chat", {
@@ -56,20 +58,44 @@ function ChatbotPage() {
             "Content-Type": "application/json",
             Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
-          body: JSON.stringify({ message: inputValue }),
+          body: JSON.stringify({
+            system:
+              "You are a Beauty AI Master. Your expertise lies in cosmetics, skincare, beauty marketing, and event planning. Always provide professional and concise responses to beauty-related questions.",
+            history: [...messages, userMessage], // 사용자 메시지를 포함한 대화 맥락 전달
+            tags: ["beauty", "skincare", "cosmetics", "makeup"],
+            message: inputValue,
+          }),
         });
   
         const data = await response.json();
         if (response.ok) {
           const botMessage = { sender: "bot", text: data.response };
-          setMessages((prevMessages) => [...prevMessages, botMessage]);
+  
+          let currentText = "";
+          let i = 0;
+  
+          // 봇 메시지를 한 글자씩 추가하는 로직
+          setMessages((prevMessages) => [...prevMessages, userMessage]); // 사용자 메시지 추가
+          const interval = setInterval(() => {
+            if (i < botMessage.text.length) {
+              currentText += botMessage.text[i]; // 한 글자씩 추가
+              setMessages((prevMessages) => {
+                // 이전 메시지들을 유지하고, 새로운 봇 메시지를 추가
+                const newMessages = [...prevMessages];
+                // 봇 메시지를 마지막에 추가
+                newMessages[newMessages.length - 1] = { sender: "bot", text: currentText };
+                return newMessages;
+              });
+              i++;
+            } else {
+              clearInterval(interval); // 텍스트가 끝나면 interval 멈추기
+            }
+          }, 50); // 50ms 간격으로 글자 하나씩 추가
         } else {
           console.error("메시지 전송 중 오류 발생:", data.error);
         }
       } catch (error) {
         console.error("메시지 전송 중 오류 발생:", error);
-      } finally {
-        setInputValue(""); // 입력창 비우기
       }
     }
   };
@@ -125,11 +151,9 @@ function ChatbotPage() {
   };
 
   const handleStartNewConversation = () => {
-    // 상태 초기화
     setSelectedConversation(null);
     setMessages([]);
     setIsInitialMessageVisible(true);
-    setTempTitle(""); // 임시 제목 초기화
   };
 
   return (
@@ -144,13 +168,10 @@ function ChatbotPage() {
                   <img src={newchat} alt="새 대화 시작" />
                 </button>
               </li>
-              {/* 채팅 목록 렌더링 */}
               {Array.isArray(history) && history.length > 0 ? (
                 history.map((item) => (
                   <li key={item.id}>
-                    <span onClick={() => handleConversationClick(item.id)}>
-                      {item.title}
-                    </span>
+                    <span onClick={() => handleConversationClick(item.id)}>{item.title}</span>
                     <button
                       className="delete-button"
                       onClick={() => handleDeleteConversation(item.id)}
@@ -181,7 +202,7 @@ function ChatbotPage() {
         <div className="chat-section">
           {isInitialMessageVisible && (
             <p className="highlight">
-              지금 <span className="highlight-blue">Beauty Chatbot</span>과 대화해 보세요.
+              Welcome! Ask me about <span className="highlight-blue">beauty tips, skincare, or trends</span>.
             </p>
           )}
           {messages.map((msg, index) => (
@@ -199,9 +220,9 @@ function ChatbotPage() {
             type="text"
             value={inputValue}
             onChange={(e) => setInputValue(e.target.value)}
-            placeholder="메시지를 입력하세요..."
+            placeholder="Ask me about beauty tips or skincare advice..."
           />
-          <button onClick={handleSendMessage}>전송</button>
+          <button onClick={handleSendMessage}>Send</button>
         </div>
       </div>
     </div>
