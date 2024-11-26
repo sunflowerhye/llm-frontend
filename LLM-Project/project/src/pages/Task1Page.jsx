@@ -2,10 +2,9 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { saveAs } from 'file-saver';
 import { Document, Packer, Paragraph, TextRun } from 'docx';
-import '../css/TaskPage.css';
+import '../css/Task1Page.css';
 
 const Task1Page = () => {
-
   const [formData, setFormData] = useState({
     companyName: '',
     productName: '',
@@ -16,63 +15,11 @@ const Task1Page = () => {
 
   const [generatedInfo, setGeneratedInfo] = useState('');
   const [loading, setLoading] = useState(false);
+
+  
   const [fileContent, setFileContent] = useState(''); // 파일 내용 저장
   const [dragging, setDragging] = useState(false); // 드래그 상태 관리
   const [fileName, setFileName] = useState(''); // 파일 이름 상태 
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
-  };
-
-  const handleGenerate = async () => {
-    setLoading(true);
-    try {
-      const response = await axios.post('https://api.openai.com/v1/chat/completions', {
-        model: 'gpt-4',
-        messages: [
-          {
-            role: 'user',
-            content: `회사의 이름은 "${formData.companyName}"이고, 
-              제품 이름은 "${formData.productName}"이며, 
-              성분 정보는 "${formData.productInfo}"입니다. 
-              홍보 키워드는 "${formData.keywords}"이고, 
-              타겟 대상은 "${formData.targetAudience}"입니다. 
-            이 정보를 바탕으로 제품을 홍보하는 문구를 만들어 주세요.
-            추가 파일 내용: ${fileContent}`,
-          },
-        ],
-        max_tokens: 500,
-      }, {
-        headers: {
-          'Authorization': `Bearer ${process.env.REACT_APP_OPENAI_API_KEY}`,
-          'Content-Type': 'application/json',
-        },
-      });
-
-      setGeneratedInfo(response.data.choices[0].message.content);
-    } catch (error) {
-      console.error('Error generating text:', error);
-      setGeneratedInfo('문구 생성 중 오류가 발생했습니다.');
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  // const handleDownload = () => {
-  //   const blob = new Blob([generatedInfo], { type: 'text/plain' });
-  //   const url = URL.createObjectURL(blob);
-  //   const a = document.createElement('a');
-  //   a.href = url;
-  //   a.download = 'generated_info.txt'; // 다운로드할 파일 이름
-  //   document.body.appendChild(a);
-  //   a.click();
-  //   document.body.removeChild(a);
-  //   URL.revokeObjectURL(url);
-  // };
 
   // 파일 업로드 처리
 const handleFileUpload = (e) => {
@@ -141,75 +88,64 @@ const handleDrop = (e) => {
     setFileContent(''); // 파일 내용 초기화
     setFileName('');    // 파일 이름 초기화
   };
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
+  };
+
+  const handleGenerate = async (endpoint) => {
+    setLoading(true);
+    try {
+      // 파일 내용이 있으면 파일을, 없으면 폼 데이터를 서버로 전송
+      const dataToSend = fileContent ? { fileContent } : formData;
   
+      const response = await axios.post(`http://127.0.0.1:5000/task1/${endpoint}`, dataToSend);
+      setGeneratedInfo(response.data.promoText);
+    } catch (error) {
+      console.error('문구 생성 중 오류가 발생했습니다:', error);
+      setGeneratedInfo('문구 생성 중 오류가 발생했습니다.');
+    } finally {
+      setLoading(false);
+    }
+  };
+  
+
   return (
-    <div className="task-container">
+    <div className="container">
       <div className="form-container">
-      <div className="form-group">
-          <label>회사명</label>
-          <input
-            type="text"
-            name="companyName"
-            value={formData.companyName}
-            onChange={handleChange}
-            placeholder="회사명을 입력하세요"
-          />
-        </div>
+        <h2>홍보 문구 생성기</h2>
+        {Object.keys(formData).map((key) => (
+          <div className="form-group" key={key}>
+            <label>{key.replace(/([A-Z])/g, ' $1').replace(/^./, (str) => str.toUpperCase())}</label>
+            <input
+              type="text"
+              name={key}
+              value={formData[key]}
+              onChange={handleChange}
+              placeholder="입력하세요"
+            />
+          </div>
+        ))}
+
         <div className="form-group">
-          <label>제품명</label>
-          <input
-            type="text"
-            name="productName"
-            value={formData.productName}
-            onChange={handleChange}
-            placeholder="제품명을 입력하세요"
-          />
-        </div>
-        <div className="form-group">
-          <label>제품 정보</label>
-          <input
-            type="text"
-            name="productInfo"
-            value={formData.productInfo}
-            onChange={handleChange}
-            placeholder="제품의 기능 및 성분을 입력하세요"
-          />
-        </div>
-        <div className="form-group">
-          <label>키워드</label>
-          <input
-            type="text"
-            name="keywords"
-            value={formData.keywords}
-            onChange={handleChange}
-            placeholder="강조하고 싶은 키워드를 입력하세요"
-          />
-        </div>
-        <div className="form-group">
-          <label>타겟 대상</label>
-          <input
-            type="text"
-            name="targetAudience"
-            value={formData.color}
-            onChange={handleChange}
-            placeholder="타겟 대상을 입력하세요"
-          />
-        </div>
-        <div className="form-group">
-        {/* 드래그 앤 드롭 영역 */}
-        <label>파일 첨부</label>
-        <div
-          onDrop={handleDrop}
-          onDragOver={handleDragOver}
-          onDragLeave={handleDragLeave}
-          style={{
-            border: dragging ? '2px dashed #4caf50' : '2px dashed #ccc',
-            padding: '20px',
-            textAlign: 'center',
-            marginBottom: '20px',
-            backgroundColor: dragging ? '#f9fff9' : '#fff',
-          }}
-        >
+                {/* 드래그 앤 드롭 영역 */}
+                <label>파일 첨부</label>
+                <div
+                  onDrop={handleDrop}
+                  onDragOver={handleDragOver}
+                  onDragLeave={handleDragLeave}
+                  style={{
+                    border: dragging ? '2px dashed #4caf50' : '2px dashed #ccc',
+                    padding: '20px',
+                    textAlign: 'center',
+                    marginBottom: '20px',
+                    backgroundColor: dragging ? '#f9fff9' : '#fff',
+                  }}
+          >
           {fileContent ? (
             <div>
               <p>
@@ -235,8 +171,6 @@ const handleDrop = (e) => {
           )}
         </div>
 
-
-
         {/* 파일 첨부 버튼 */}
         <div style={{ textAlign: 'center', marginTop: '10px' }}>
           <label htmlFor="fileUpload" style={{ cursor: 'pointer', color: '#007BFF' }}>
@@ -251,13 +185,35 @@ const handleDrop = (e) => {
           />
         </div>
       </div>
-        <button className="generate-button" onClick={handleGenerate} disabled={loading}>
-          {loading ? '생성 중...' : '자동 생성'}
-        </button>
+
+
+        <div style={{ display: 'flex', justifyContent: 'center', gap: '1rem', marginTop: '1rem' }}>
+          <button
+            className="generate-button"
+            onClick={() => handleGenerate('generate-promo-emotional')}
+            disabled={loading}
+          >
+            {loading ? '감성적 홍보 생성 중...' : '감성적 홍보 생성'}
+          </button>
+          <button
+            className="generate-button"
+            onClick={() => handleGenerate('generate-promo-effect')}
+            disabled={loading}
+          >
+            {loading ? '효과 강조 홍보 생성 중...' : '효과 강조 홍보 생성'}
+          </button>
+          <button
+            className="generate-button"
+            onClick={() => handleGenerate('generate-promo-storytelling')}
+            disabled={loading}
+          >
+            {loading ? '스토리텔링 홍보 생성 중...' : '스토리텔링 홍보 생성'}
+          </button>
+        </div>
       </div>
       <div className="info-container">
         <h2>홍보 문구</h2>
-        <div className="generated-info">{generatedInfo || '자동 생성 버튼을 눌러주세요!'}</div>
+        <div className="generated-info">{generatedInfo || '버튼을 눌러 홍보 문구를 생성하세요!'}</div>
         <button className="download-button" onClick={handleDownload} disabled={!generatedInfo}>
           파일 다운로드
         </button>
