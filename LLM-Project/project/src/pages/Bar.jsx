@@ -91,7 +91,7 @@ function Bar({ isLoggedIn, setToken }) {
                     <div style={menuStyle}>
                         <Link to="/" className="link">Home</Link>
                         <Link to="/chatbot" className="link">Chatbot</Link>
-                        <Link to="/pricing" className="link">Pricing</Link>
+                        <Link to="/service-guide" className="link">Service Guide</Link>
                         <Link to="/taskUI" className="link">TaskUI</Link>
                     </div>
                     <div style={loginStyle}>

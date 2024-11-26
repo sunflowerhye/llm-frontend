@@ -1,15 +1,24 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import '../css/Task1Page.css';
+import { translate } from '@vitalets/google-translate-api';
+import '../css/TaskPage.css';
 
-const Task4Page = () => {
+const Task2Page = () => {
+  // const [formData, setFormData] = useState({
+  //   companyName: '',
+  //   productName: '',
+  //   keywords: '',
+  //   mood: '', 
+  //   targetAudience: '',
+  // });
   const [formData, setFormData] = useState({
     companyName: '', // 브랜드 이름
     productName: '', // 제품 이름
     productInfo: '', // 제품의 주요 기능 및 효과
-    symbol: '', // 제품의 효과를 상징하는 시각적 요소 (ex: 수분을 위한 물방울)
+    symbol: '', // 제품의 효과를 상징하는 시각적 요소(ex: 수분을 위한 물방울 ..)
     keywords: '', // 행동 유도 문구
     color: '', // 사용자 지정 색상
+    //size: '512x512'
   });
 
   const [imageUrl, setImageUrl] = useState('');
@@ -24,26 +33,56 @@ const Task4Page = () => {
     });
   };
 
+  const translateText = async (text) => {
+    try {
+      const res = await translate(text, { to: 'en' });
+      return res.text; // 번역된 텍스트 반환
+    } catch (error) {
+      console.error('Translation error:', error);
+      return text; // 오류 발생 시 원본 텍스트 반환
+    }
+  };
+
   const handleGenerateImage = async () => {
     setLoading(true);
     setErrorMessage('');
 
     try {
-      const response = await axios.post('/api/task4/generate-image2', formData);
 
-      if (response.data.imageData) {
-        const imageSrc = `data:image/png;base64,${response.data.imageData}`;
-        setImageUrl(imageSrc);
-      } else {
-        setErrorMessage('이미지를 생성할 수 없습니다.');
-      }
+      // 입력값을 영어로 번역
+      const translatedCompanyName = await translateText(formData.companyName);
+      const translatedProductName = await translateText(formData.productName);
+      const translatedProductInfo = await translateText(formData.productInfo);
+      const translatedSymbol = await translateText(formData.symbol);
+      const translatedKeywords = await translateText(formData.keywords);
+      const translatedColor = await translateText(formData.color); 
+     
+      const response = await axios.post('https://api.openai.com/v1/images/generations', {
+        prompt: `Create a luxury advertisement banner for the brand "${translatedCompanyName}". 
+        The product being promoted is called "${translatedProductName}"
+         and is known for its "${translatedProductInfo}".
+          The design should incorporate a visual element symbolizing its effect, such as "${translatedSymbol}".
+           Use the color "${translatedColor}" as the main theme to create a cohesive, fresh, and appealing look. 
+           The banner should highlight the following key message: "${translatedKeywords}". Ensure that the design is elegant, minimalistic, 
+           and premium, and make the advertisement size ${formData.size}.`,
+        n: 1,
+        size: '512x512',
+      }, {
+        headers: {
+          'Authorization': `Bearer ${process.env.REACT_APP_OPENAI_API_KEY}`,
+          'Content-Type': 'application/json',
+        },
+      });
+
+      setImageUrl(response.data.data[0].url);
     } catch (error) {
       console.error('Error generating image:', error);
-      setErrorMessage('이미지를 생성하는 중 문제가 발생했습니다.');
+      setImageUrl('');
     } finally {
       setLoading(false);
     }
   };
+
 
   const handleDownload = () => {
     if (!imageUrl) return;
@@ -57,9 +96,8 @@ const Task4Page = () => {
   };
 
   return (
-    <div className="container">
+    <div className="task-container">
       <div className="form-container">
-        <h1>광고 이미지 생성</h1>
         <div className="form-group">
           <label>회사명</label>
           <input
@@ -121,6 +159,16 @@ const Task4Page = () => {
           />
         </div>
 
+        {/* 배너 사이즈 선택 */}
+        {/* <div className="form-group">
+          <label>배너 사이즈</label>
+          <select name="size" value={formData.size} onChange={handleChange}>
+            <option value="1024x1024">Square (1024x1024)</option>
+            <option value="1792x1024">Wide (1792x1024)</option>
+            <option value="1024x1792">Tall (1024x1792)</option>
+          </select>
+        </div> */}
+
         <button className="generate-button" onClick={handleGenerateImage} disabled={loading}>
           {loading ? '생성 중...' : '이미지 생성'}
         </button>
@@ -144,4 +192,4 @@ const Task4Page = () => {
   );
 };
 
-export default Task4Page;
+export default Task2Page;

@@ -4,8 +4,7 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import StartPage from './pages/StartPage';
 import Bar from './pages/Bar';
 import ChatbotPage from './pages/ChatbotPage';
-import PricingPage from './pages/PricingPage';
-import Section from './components/Section';
+import ServiceGuidePage from './pages/ServiceGuidePage';
 import LoginPage from './pages/LoginPage';
 import SignupPage from './pages/SignupPage';
 import Task1Page from './pages/Task1Page';
@@ -13,6 +12,8 @@ import Task2Page from './pages/Task2Page';
 import Task3Page from './pages/Task3Page';
 import Task4Page from './pages/Task4Page';
 import TaskUI from './pages/TaskUI';
+
+import ChatbotPage2 from './pages/ChatbotPage2';
 
 function App() {
   const [token, setToken] = useState(null);
@@ -43,8 +44,8 @@ function App() {
         <Bar isLoggedIn={isLoggedIn} setToken={setToken} />
         <Routes>
           <Route path="/" element={<StartPage />} />
-          <Route path="/chatbot" element={<ChatbotPage />} />
-          <Route path="/pricing" element={<PricingPage />} />
+          <Route path="/chatbot" element={<ChatbotPage2 />} />
+          <Route path="/service-guide" element={<ServiceGuidePage />} />
           <Route path="/login" element={<LoginPage setToken={setToken} />} />
           <Route path="/signup" element={<SignupPage />} />
           <Route path="/taskUI" element={<TaskUI />} />
@@ -53,7 +54,6 @@ function App() {
           <Route path="/task/3" element={<Task3Page />} />
           <Route path="/task/4" element={<Task4Page />} />
         </Routes>
-        <Section />
       </div>
     </Router>
   );

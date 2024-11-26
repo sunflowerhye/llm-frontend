@@ -19,16 +19,51 @@
     background-color: #f0f2f5;
     padding: 20px;
     border-right: 1px solid #dcdcdc;
+    display: flex;
+    flex-direction: column;
 }
 
 .sidebar h2 {
     margin-bottom: 30px;
 }
 
+/* 타이틀과 버튼 고정 */
+.header-with-button {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+    position: sticky;
+    top: 0; /* 스크롤에도 고정 */
+    background-color: #f0f2f5;
+    z-index: 1;
+}
+
+/* 스크롤바가 적용될 채팅 목록 */
 .sidebar nav ul {
     list-style-type: none;
     padding: 0;
+    margin: 0;
+    max-height: 70vh; /* 최대 높이 설정 */
+    overflow-y: auto; /* 세로 스크롤바 활성화 */
+    scrollbar-width: thin; /* Firefox 스크롤바 */
+    scrollbar-color: #aaa #f0f2f5; /* 스크롤바 색상 */
 }
+
+/* 스크롤바 스타일 (Webkit 브라우저) */
+.sidebar nav ul::-webkit-scrollbar {
+    width: 8px;
+}
+
+.sidebar nav ul::-webkit-scrollbar-thumb {
+    background-color: #aaa;
+    border-radius: 4px;
+}
+
+.sidebar nav ul::-webkit-scrollbar-track {
+    background-color: #f0f2f5;
+}
+
 
 .sidebar nav li {
     margin-bottom: 15px;
@@ -43,17 +78,24 @@
     text-align: left; /* 텍스트 왼쪽 정렬 */
 }
 
+/* Delete 버튼 기본 숨기기 */
 .sidebar nav li .delete-button {
-    margin-left: 10px; /* 삭제 버튼과 제목 간격 */
+    display: none; /* 기본 상태에서는 숨기기 */
+    margin-left: 10px;
     background: none;
     border: none;
     cursor: pointer;
     width: 20px;
     height: 20px;
-    display: flex;
     justify-content: center;
     align-items: center;
 }
+
+/* 마우스를 올렸을 때만 delete 버튼 보이기 */
+.sidebar nav li:hover .delete-button {
+    display: flex; /* 마우스를 올리면 버튼 보이기 */
+}
+
 
 /* Toggle Button */
 .toggle-button {
@@ -186,3 +228,42 @@
     border-radius: 5px;
     cursor: pointer;
 }
+
+
+.history-list {
+    max-height: calc(100vh - 150px); /* 화면 높이에 따라 조정 */
+    overflow-y: auto;
+  }
+  
+  .history-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    border-bottom: 1px solid #eee;
+    cursor: pointer;
+  }
+  
+  .history-item:hover {
+    background-color: #f9f9f9;
+  }
+  
+  .history-title {
+    flex: 1;
+    font-size: 14px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+  }
+  
+  .delete-button img {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+  }
+  
+  .empty-history {
+    text-align: center;
+    color: #aaa;
+    padding: 20px;
+  }
+  
