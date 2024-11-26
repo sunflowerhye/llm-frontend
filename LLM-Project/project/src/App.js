@@ -12,6 +12,7 @@ import Task2Page from './pages/Task2Page';
 import Task3Page from './pages/Task3Page';
 import Task4Page from './pages/Task4Page';
 import TaskUI from './pages/TaskUI';
+import ScrollToTop from './ScrollToTop';
 
 import ChatbotPage2 from './pages/ChatbotPage2';
 
@@ -39,22 +40,24 @@ function App() {
 
   return (
     <Router>
-      <div className="App">
-        {/* Bar 컴포넌트를 항상 렌더링 */}
-        <Bar isLoggedIn={isLoggedIn} setToken={setToken} />
-        <Routes>
-          <Route path="/" element={<StartPage />} />
-          <Route path="/chatbot" element={<ChatbotPage2 />} />
-          <Route path="/service-guide" element={<ServiceGuidePage />} />
-          <Route path="/login" element={<LoginPage setToken={setToken} />} />
-          <Route path="/signup" element={<SignupPage />} />
-          <Route path="/taskUI" element={<TaskUI />} />
-          <Route path="/task/1" element={<Task1Page />} />
-          <Route path="/task/2" element={<Task2Page />} />
-          <Route path="/task/3" element={<Task3Page />} />
-          <Route path="/task/4" element={<Task4Page />} />
-        </Routes>
-      </div>
+      <ScrollToTop>
+        <div className="App">
+          {/* Bar 컴포넌트를 항상 렌더링 */}
+          <Bar isLoggedIn={isLoggedIn} setToken={setToken} />
+          <Routes>
+            <Route path="/" element={<StartPage />} />
+            <Route path="/chatbot" element={<ChatbotPage2 />} />
+            <Route path="/service-guide" element={<ServiceGuidePage />} />
+            <Route path="/login" element={<LoginPage setToken={setToken} />} />
+            <Route path="/signup" element={<SignupPage />} />
+            <Route path="/taskUI" element={<TaskUI />} />
+            <Route path="/task/1" element={<Task1Page />} />
+            <Route path="/task/2" element={<Task2Page />} />
+            <Route path="/task/3" element={<Task3Page />} />
+            <Route path="/task/4" element={<Task4Page />} />
+          </Routes>
+        </div>
+      </ScrollToTop>
     </Router>
   );
 }
