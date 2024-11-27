@@ -147,7 +147,7 @@ function Task2Page() {
                     </div>
                 ))}
 
-<div className="form-group">
+            <div className="form-group">
                 {/* 드래그 앤 드롭 영역 */}
                 <label>파일 첨부</label>
                 <div
@@ -161,7 +161,7 @@ function Task2Page() {
                     marginBottom: '20px',
                     backgroundColor: dragging ? '#f9fff9' : '#fff',
                   }}
-          >
+                >
           {fileContent ? (
             <div>
               <p>
@@ -189,18 +189,18 @@ function Task2Page() {
 
         {/* 파일 첨부 버튼 */}
         <div style={{ textAlign: 'center', marginTop: '10px' }}>
-          <label htmlFor="fileUpload" style={{ cursor: 'pointer', color: '#007BFF' }}>
-            파일 업로드 클릭
-          </label>
-          <input
-            id="fileUpload"
-            type="file"
-            accept=".txt,.csv,.json"
-            onChange={handleFileUpload}
-            style={{ display: 'none' }} // 숨기기
-          />
+            <label htmlFor="fileUpload" style={{ cursor: 'pointer', color: '#007BFF' }}>
+                파일 업로드 클릭
+            </label>
+            <input
+                id="fileUpload"
+                type="file"
+                accept=".txt,.csv,.json"
+                onChange={handleFileUpload}
+                style={{ display: 'none' }} // 숨기기
+            />
+            </div>
         </div>
-      </div>
 
                 <button
                     className="generate-button"
@@ -252,10 +252,9 @@ function Task2Page() {
                     </div>
                 )}
 
-<button className="download-button" onClick={handleDownload} disabled={!handleCompare}>
-          파일 다운로드
-        </button>
-
+            <button className="download-button" onClick={handleDownload} disabled={!handleCompare}>
+            파일 다운로드
+            </button>
             </div>
         </div>
     );

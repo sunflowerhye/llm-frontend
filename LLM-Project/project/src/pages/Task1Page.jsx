@@ -14,8 +14,7 @@ const Task1Page = () => {
   });
 
   const [generatedInfo, setGeneratedInfo] = useState('');
-  const [loading, setLoading] = useState(false);
-
+  const [loadingButton, setLoadingButton] = useState(''); // 클릭된 버튼 상태 관리
   
   const [fileContent, setFileContent] = useState(''); // 파일 내용 저장
   const [dragging, setDragging] = useState(false); // 드래그 상태 관리
@@ -98,7 +97,7 @@ const handleDrop = (e) => {
   };
 
   const handleGenerate = async (endpoint) => {
-    setLoading(true);
+    setLoadingButton(endpoint);
     try {
       // 파일 내용이 있으면 파일을, 없으면 폼 데이터를 서버로 전송
       const dataToSend = fileContent ? { fileContent } : formData;
@@ -109,28 +108,34 @@ const handleDrop = (e) => {
       console.error('문구 생성 중 오류가 발생했습니다:', error);
       setGeneratedInfo('문구 생성 중 오류가 발생했습니다.');
     } finally {
-      setLoading(false);
+      setLoadingButton(''); // 로딩 상태 초기화
     }
   };
-  
+
+  const formFields = [
+    { label: '회사명', name: 'companyName', placeholder: '회사명을 입력하세요' },
+    { label: '제품명', name: 'productName', placeholder: '제품명을 입력하세요' },
+    { label: '제품 정보', name: 'productInfo', placeholder: '제품의 기능 및 성분을 입력하세요' },
+    { label: '키워드', name: 'keywords', placeholder: '강조하고 싶은 키워드를 입력하세요' },
+    { label: '타겟 대상', name: 'targetAudience', placeholder: '타겟 대상을 입력하세요' },
+  ]; 
 
   return (
     <div className="container">
       <div className="form-container">
-        <h2>홍보 문구 생성기</h2>
-        {Object.keys(formData).map((key) => (
-          <div className="form-group" key={key}>
-            <label>{key.replace(/([A-Z])/g, ' $1').replace(/^./, (str) => str.toUpperCase())}</label>
-            <input
-              type="text"
-              name={key}
-              value={formData[key]}
-              onChange={handleChange}
-              placeholder="입력하세요"
-            />
-          </div>
-        ))}
-
+        <h2>홍보 문구 생성</h2>
+        {formFields.map(({ label, name, placeholder }) => (
+        <div className="form-group" key={name}>
+          <label>{label}</label>
+          <input
+            type="text"
+            name={name}
+            value={formData[name]}
+            onChange={handleChange}
+            placeholder={placeholder}
+          />
+        </div>
+      ))}
         <div className="form-group">
                 {/* 드래그 앤 드롭 영역 */}
                 <label>파일 첨부</label>
@@ -191,23 +196,38 @@ const handleDrop = (e) => {
           <button
             className="generate-button"
             onClick={() => handleGenerate('generate-promo-emotional')}
-            disabled={loading}
+            disabled={loadingButton === 'generate-promo-emotional'}
           >
-            {loading ? '감성적 홍보 생성 중...' : '감성적 홍보 생성'}
+            {loadingButton === 'generate-promo-emotional'
+              ? '감성적 홍보 생성 중...'
+              : '감성적 홍보 생성'}
           </button>
           <button
             className="generate-button"
             onClick={() => handleGenerate('generate-promo-effect')}
-            disabled={loading}
+            disabled={loadingButton === 'generate-promo-effect'}
           >
-            {loading ? '효과 강조 홍보 생성 중...' : '효과 강조 홍보 생성'}
+            {loadingButton === 'generate-promo-effect'
+              ? '효과 강조 홍보 생성 중...'
+              : '효과 강조 홍보 생성'}
           </button>
           <button
             className="generate-button"
-            onClick={() => handleGenerate('generate-promo-storytelling')}
-            disabled={loading}
+            onClick={() => handleGenerate('generate-promo-humor')}
+            disabled={loadingButton === 'generate-promo-humor'}
           >
-            {loading ? '스토리텔링 홍보 생성 중...' : '스토리텔링 홍보 생성'}
+            {loadingButton === 'generate-promo-humor'
+              ? '유머 홍보 생성 중...'
+              : '유머 홍보 생성'}
+          </button>
+          <button
+            className="generate-button"
+            onClick={() => handleGenerate('generate-promo-personalized')}
+            disabled={loadingButton === 'generate-promo-personalized'}
+          >
+            {loadingButton === 'generate-promo-personalized'
+              ? '맞춤형 홍보 생성 중...'
+              : '맞춤형 홍보 생성'}
           </button>
         </div>
       </div>

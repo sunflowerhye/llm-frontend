@@ -53,18 +53,26 @@ const Task3Page = () => {
     }
   };
 
+  const formFields = [
+    { label: '목표', name: 'goal', placeholder: '목표를 입력하세요' },
+    { label: '전략', name: 'strategy', placeholder: '전략을 입력하세요' },
+    { label: '타겟 대상', name: 'targetAudience', placeholder: '타겟층을 입력하세요' },
+    { label: '예산', name: 'budget', placeholder: '예산을 입력하세요' },
+  ];
+
   return (
     <div className="container">
       <div className="form-container">
-        {Object.keys(formData).map((key) => (
-          <div className="form-group" key={key}>
-            <label>{key.replace(/([A-Z])/g, ' $1').replace(/^./, (str) => str.toUpperCase())}</label>
+      <h2>기획안 제작</h2>
+      {formFields.map(({ label, name, placeholder }) => (
+          <div className="form-group" key={name}>
+            <label>{label}</label>
             <input
               type="text"
-              name={key}
-              value={formData[key]}
+              name={name}
+              value={formData[name]}
               onChange={handleChange}
-              placeholder="입력하세요"
+              placeholder={placeholder}
             />
           </div>
         ))}
