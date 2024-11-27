@@ -1,0 +1,90 @@
+.title {
+    font-size: 4rem; /* 제목 폰트 크기 */
+    margin-top: 80px; /* 바와의 간격 */
+    color: #000; /* 검정색으로 설정 */
+    font-family: 'Great Vibes', cursive; /* 폰트 설정 */
+}
+
+.subtitle {
+    margin-bottom: 30px; /* 버튼과의 간격 */
+    font-size: 1.5rem; /* 부제목 폰트 크기 */
+    color: #3A3A3A; /* 부제목 색상 */
+}
+
+.join-button {
+    padding: 15px 30px;
+    background-color: #007BFF; /* 버튼 색상 */
+    color: #ffffff;
+    border: none;
+    border-radius: 5px;
+    margin-bottom: 150px; /* 아래 여백 추가 */
+    cursor: pointer; /* 커서 스타일 변경 */
+}
+
+.card-container {
+    margin-bottom: 50px; 
+    display: flex;
+    justify-content: center; /* 카드 중앙 정렬 */
+    align-items: center;
+    align-items: flex-start; /* 카드 상단 정렬 */
+    flex-wrap: wrap; /* 카드가 컨테이너를 넘어가면 다음 줄로 이동 */
+}
+
+.card {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
+    text-align: center;
+    width: 300px; /* 카드 너비 */
+    height: 200px; /* 카드 높이 */
+    color: #000; /* 카드 텍스트 색상 */
+    margin: 0 10px; /* 카드 간격 */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 그림자 효과 */
+    transition: transform 0.5s ease; /* 카드 효과 */
+}
+
+.card:hover {
+    transform: scale(1.05); /* 카드 호버 시 확대 효과 */
+}
+
+.icon {
+    font-size: 40px; /* 아이콘 크기 */
+    margin-bottom: 10px; /* 아이콘과 텍스트 간격 */
+}
+
+.product-slider {
+    margin: 20px 0; /* 슬라이드 위 아래 여백 */
+}
+
+.product-item {
+    text-align: center; /* 텍스트 중앙 정렬 */
+}
+
+.product-item img {
+    width: 100%; /* 이미지 너비 조정 */
+    height: auto; /* 비율 유지 */
+    border-radius: 8px; /* 모서리 둥글게 */
+}
+
+.additional-page {
+    padding: 50px;
+    background-color: #f9f9f9;
+    text-align: center;
+}
+
+.slider {
+    display: none !important; /* 또는 visibility: hidden; */
+}
+
+.dongle-regular {
+    font-family: "Dongle", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+  }
+
+  @media (max-width: 768px) {
+    .card {
+        width: 100%; /* 모바일에서는 카드가 전체 너비를 차지하도록 */
+    }
+}
+  

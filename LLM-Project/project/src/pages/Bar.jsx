@@ -2,6 +2,8 @@ import React, { useEffect } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import logo from '../img/logo.png';
 
+
+
 const toolbarStyle = (isAuthPage) => ({
     width: '100%',
     height: '90px',
