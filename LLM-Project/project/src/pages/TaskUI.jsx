@@ -15,7 +15,7 @@ const TaskUI = () => {
   return (
     <div className="task-ui">
       <header className="task-ui-header">
-        <h1>✨ LLM Task Management</h1>
+        <h1>LLM Task Management</h1>
         <p>AI를 활용한 뷰티 제품 홍보, 기획 및 관리 솔루션</p>
       </header>
       <div className="task-ui-container">
