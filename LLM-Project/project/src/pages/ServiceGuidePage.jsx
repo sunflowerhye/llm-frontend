@@ -16,19 +16,19 @@ const ServiceGuidePage = () => {
         <div className="task-cards">
             <div className="task-card">
                 <h3>홍보 문구 생성</h3>
-                <p>브랜드를 돋보이게 하는 매력적인 광고 문구를 제작하세요.</p>
+                <p>브랜드를 돋보이게 하는 매력적인<br/>광고 문구를 제작하세요.</p>
             </div>
             <div className="task-card">
                 <h3>화장품 성분 비교</h3>
-                <p>제품 성분을 쉽고 빠르게 비교하여 최적의 선택을 돕습니다.</p>
+                <p>제품 성분을 쉽고 빠르게 비교하여<br/> 최적의 선택을 돕습니다.</p>
             </div>
             <div className="task-card">
                 <h3>기획안 제작</h3>
-                <p>체계적이고 창의적인 기획안을 손쉽게 완성하세요.</p>
+                <p>체계적이고 창의적인 기획안을<br/> 손쉽게 완성하세요.</p>
             </div>
             <div className="task-card">
                 <h3>부스/이벤트 기획</h3>
-                <p>성공적인 행사를 위한 맞춤형 솔루션을 제공합니다.</p>
+                <p>성공적인 행사를 위한<br/> 맞춤형 솔루션을 제공합니다.</p>
             </div>
         </div>
       </div>
@@ -169,7 +169,7 @@ const ServiceGuidePage = () => {
       <ul>
         <li><strong>실시간 답변:</strong> 뷰티 트렌드, 성분 정보, 피부 고민 해결 등 다양한 질문에 신속한 응답.</li>
         <li><strong>제품 추천:</strong> 사용자의 피부 타입, 선호도에 맞는 제품을 맞춤 추천.</li>
-        <li><strong>데이터 저장 및 공유:</strong> 대화 기록을 저장하거나 필요한 정보를 쉽게 공유 가능.</li>
+        <li><strong>키워드를 통한 간편한 입력:</strong> 키워드를 선택하면 해당 키워드에 맞는 맞춤형 질문 생성.</li>
       </ul>
 
       <h3>서비스 이용 과정</h3>

@@ -31,9 +31,13 @@ const Chatbot = () => {
 
     const prompt = ` 
     당신은 뷰티 산업에 특화된 챗봇 BeautyBot입니다. 
-    아래 질문에 대한 답변을 작성할 때, 구체적이고 창의적인 방식으로 작성해 주세요. 
-    항상 뷰티 업계의 최신 트렌드, 전문 용어, 고객 관점 등을 반영해 답변을 제공하세요.
+    아래 질문에 대한 답변을 작성할 때, 반드시 짧고 간결하고 창의적인 방식으로 작성해 주세요. 
+    항상 뷰티 업계의 최신 트렌드, 전문 용어, 고객 관점 등을 반영해 간결하게 요약된 답변을 제공하세요.
     `;
+
+    // 당신은 뷰티 산업에 특화된 챗봇 BeautyBot입니다. 
+    // 아래 질문에 대한 답변을 작성할 때, 간결하고 창의적인 방식으로 작성해 주세요. 
+    // 항상 뷰티 업계의 최신 트렌드, 전문 용어, 고객 관점 등을 반영해 간결하게 요약된 답변을 제공하세요.
 
     try {
       const response = await axios.post(
@@ -48,7 +52,7 @@ const Chatbot = () => {
             ...newMessages
           ],
           temperature: 0.7,
-          max_tokens: 200,
+          max_tokens: 150,
           top_p: 1,
           frequency_penalty: 0,
           presence_penalty: 0,
@@ -164,7 +168,7 @@ const Chatbot = () => {
             className="input"
             placeholder="질문을 입력하세요..."
           />
-          <button onClick={() => handleSend(userInput)} className="button">전송</button>
+          <button onClick={() => handleSend(userInput)} className="askbutton">Ask</button>
         </div>
       </div>
     </div>

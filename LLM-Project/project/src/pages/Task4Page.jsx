@@ -152,6 +152,17 @@ const Task4Page = () => {
             {generatedPlan || '기획 생성 버튼을 눌러주세요!'}
           </pre>
         </div>
+        {showTimetableButton && (
+          <div style={{ marginTop: '1rem', textAlign: 'center' }}>
+            <button
+              className="generate-button"
+              onClick={handleDownloadTimetable}
+              disabled={loadingTimetable}
+            >
+              {loadingTimetable ? '타임 테이블 생성 중...' : '타임 테이블 다운로드'}
+            </button>
+          </div>
+        )}
       </div>   
     </div>
   );
