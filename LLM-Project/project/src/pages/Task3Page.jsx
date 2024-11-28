@@ -82,14 +82,22 @@ const Task3Page = () => {
           disabled={loading}
           style={{ marginRight: '1rem' }} 
         >
-          {loading ? '생성 중...' : '자동 생성'}
+          {loading ? '생성 중...' : '기획안 생성'}
         </button>   
       </div>
       <div className="info-container">
         <h2>생성된 기획안</h2>
         <div className="generated-info">
-          <pre style={{ whiteSpace: 'pre-wrap', wordWrap: 'break-word', color: '#000', fontSize: '1.2em', textAlign: 'left' }}>
-            {generatedInfo || '자동 생성 버튼을 눌러주세요!'}
+        <pre
+            style={{
+              whiteSpace: 'pre-wrap',
+              wordWrap: 'break-word',
+              fontSize: '1em',
+              textAlign: generatedInfo ? 'left' : 'center',
+              fontFamily: 'Noto Sans KR',
+            }}
+          >
+            {generatedInfo || '기획안 생성 버튼을 눌러주세요!'}
           </pre>
         </div>
         <button

@@ -1,83 +1,147 @@
-/* .task-ui {
-  font-family: 'Poppins', Arial, sans-serif;
-  background: linear-gradient(to bottom right, #FFF5F5, #FFEEEE);
-  padding: 40px;
-  max-width: 1200px;
-  margin: auto;
-  text-align: center;
-} */
-
+/* 기본 페이지 스타일 */
 .task-ui {
   font-family: 'Poppins', Arial, sans-serif;
-  background: linear-gradient(to bottom right, #def2fa, #FFEEEE);
+  background: linear-gradient(135deg, #b8c6db, #f5f7fa); /* 고급스러운 그라데이션 배경 */
   padding: 40px;
   margin: auto;
   text-align: center;
   min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  opacity: 0;
+  transition: opacity 1s ease-in-out;
 }
 
+.task-ui.animate {
+  opacity: 1;
+}
+
+/* 헤더 스타일 */
 .task-ui-header {
-  margin-bottom: 50px;
+  margin-bottom: 60px;
+  opacity: 0;
+  transform: translateY(-50px);
+  transition: opacity 1s ease, transform 1s ease;
+}
+
+.task-ui-header.animate {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 .task-ui-header h1 {
-  font-size: 2.8em;
-  color: #333;
+  font-size: 2.6em;
+  color: #283046; /* 딥 네이비 */
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 4px;
 }
 
 .task-ui-header p {
-  font-size: 1.3em;
-  color: #666;
+  font-size: 1.2em;
+  color: #6b7280; /* 부드러운 그레이 */
+  margin-top: 15px;
 }
 
+/* 카드 그리드 레이아웃 - 4개의 카드가 한 줄에 보이도록 설정 */
 .task-ui-container {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-template-columns: repeat(4, 1fr); /* 4개의 카드 */
   gap: 30px;
+  max-width: 1200px; /* 그리드의 최대 너비 설정 */
+  width: 100%; /* 전체 너비 설정 */
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 1s ease, transform 1s ease;
+  justify-content: center; /* 중앙 정렬 */
+  margin: 0 auto; /* 가로 정렬을 위해 중앙 배치 */
 }
 
-.task-card {
-  background-color: white;
-  border: 1px solid #ddd;
+.task-ui-container.animate {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* 카드 디자인 */
+.task-ui-card {
+  background-color: #ffffff;
   border-radius: 15px;
-  padding: 25px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  text-align: left;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  opacity: 0;
+  transform: translateY(30px);
+  border: 1px solid #d1d5db; /* 카드 테두리에 미세한 선 */
+  
+  /* 카드 크기를 정사각형으로 만들기 */
+  height: 270px;
+  width: 300px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
 }
 
-.task-card:hover {
-  transform: scale(1.02);
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+.task-ui-card.animate {
+  opacity: 1;
+  transform: translateY(0);
 }
 
+.task-ui-card:hover {
+  transform: scale(1.02); /* 크기 변화를 약간만 주기 */
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1); /* 부드러운 그림자 */
+}
+
+/* 아이콘 왼쪽 정렬 */
 .task-icon {
   font-size: 3em;
-  margin-bottom: 15px;
+  color: #fbbf24; /* 고급스러운 골드 색상 */
+  margin-right: 20px; /* 오른쪽 마진 추가로 텍스트와 간격 조정 */
+  display: inline-block;
+  vertical-align: middle; /* 텍스트와 수평 정렬 */
 }
 
-.task-card h2 {
+/* 카드 제목 */
+.task-ui-card h2 {
   font-size: 1.6em;
-  margin-bottom: 15px;
-  color: #011429;
+  margin-bottom: 10px;
+  color: #283046; /* 딥 네이비 */
+  font-weight: 600;
+  text-align: left; /* 텍스트 왼쪽 정렬 */
+  display: inline-block; /* 아이콘과 수평 정렬 */
+  vertical-align: middle;
+  margin-top: 10px;
 }
 
-.task-card p {
+/* 카드 설명 */
+.task-ui-card p {
   font-size: 1.1em;
-  color: #555;
-  line-height: 1.5;
+  color: #4b5563; /* 부드러운 그레이 */
+  line-height: 1.6;
+  text-align: left; /* 텍스트 왼쪽 정렬 */
+  flex-grow: 1;
+  margin-top: 10px;
+  margin-bottom: 10px;
 }
 
-.task-add-button {
-  margin-top: 25px;
-  padding: 15px 30px;
-  font-size: 1.1em;
-  background-color: #333;
-  color: white;
-  border-radius: 8px;
-  transition: background-color 0.3s ease;
+/* 반응형 디자인: 작은 화면에서 카드 크기 조정 */
+@media (max-width: 1024px) {
+  .task-ui-container {
+    grid-template-columns: repeat(2, 1fr); /* 화면 크기 줄어들 때 2개의 카드 표시 */
+  }
 }
 
-.task-add-button:hover {
-  background-color: #555;
+@media (max-width: 768px) {
+  .task-ui-container {
+    padding: 0 20px;
+  }
+
+  .task-ui-card {
+    padding: 25px;
+    height: 250px; /* 작은 화면에서는 카드 높이를 더 줄임 */
+    width: 250px;
+  }
 }
