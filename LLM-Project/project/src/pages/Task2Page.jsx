@@ -269,7 +269,7 @@ function Task2Page() {
                         placeholder="제품명을 입력하세요"
                     />
                 </div>
-                <div className="form-group">
+                {/* <div className="form-group">
                     <label>파일 첨부</label>
                     <div
                         onDrop={handleDrop}
@@ -306,7 +306,7 @@ function Task2Page() {
                             style={{ display: 'none' }}
                         />
                     </div>
-                </div>
+                </div> */}
                 <button
                     className="generate-button"
                     onClick={handleCompare}
