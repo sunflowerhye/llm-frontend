@@ -30,12 +30,14 @@ const menuStyle = {
     display: 'flex',
     alignItems: 'center',
     gap: '2em',
+    fontSize: '18px',
 };
 
 const loginStyle = {
     display: 'flex',
     alignItems: 'center',
     gap: '1.5em',
+    fontSize: '18px',
 };
 
 const buttonStyle = {
@@ -59,29 +61,31 @@ function Bar({ isLoggedIn, setToken }) {
     }, [isLoggedIn]);
 
     const handleLogout = async () => {
-        try {
-            const token = localStorage.getItem('token');
-            const res = await fetch('/api/logout', {
-                method: 'POST',
-                headers: {
-                    'Authorization': `Bearer ${token}`,
-                    'Content-Type': 'application/json',
-                },
-            });
+    try {
+        const token = localStorage.getItem('token');
+        const res = await fetch('/api/logout', {
+            method: 'POST',
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json',
+            },
+        });
 
-            if (res.ok) {
-                console.log('로그아웃 성공');
-                setToken(null);
-                navigate('/');
-            } else {
-                const error = await res.json();
-                alert(`Logout failed: ${error.message || res.status}`);
-            }
-        } catch (err) {
-            console.error('Logout error:', err);
-            alert('An unexpected error occurred. Please try again.');
+        if (res.ok) {
+            console.log('로그아웃 성공');
+            localStorage.removeItem('token');
+            setToken(null); // 상태 업데이트
+            navigate('/'); // StartPage로 이동
+        } else {
+            const error = await res.json();
+            alert(`Logout failed: ${error.message || res.status}`);
         }
-    };
+    } catch (err) {
+        console.error('Logout error:', err);
+        alert('An unexpected error occurred. Please try again.');
+    }
+};
+
 
     return (
         <div style={toolbarStyle(isAuthPage)}>

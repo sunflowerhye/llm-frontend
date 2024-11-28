@@ -14,7 +14,7 @@ import Task4Page from './pages/Task4Page';
 import TaskUI from './pages/TaskUI';
 import ScrollToTop from './ScrollToTop';
 
-import ChatbotPage2 from './pages/ChatbotPage2';
+import ChatBot from './pages/Chatbot';
 
 function App() {
   const [token, setToken] = useState(null);
@@ -46,7 +46,7 @@ function App() {
           <Bar isLoggedIn={isLoggedIn} setToken={setToken} />
           <Routes>
             <Route path="/" element={<StartPage />} />
-            <Route path="/chatbot" element={<ChatbotPage2 />} />
+            <Route path="/chatbot" element={<ChatBot />} />
             <Route path="/service-guide" element={<ServiceGuidePage />} />
             <Route path="/login" element={<LoginPage setToken={setToken} />} />
             <Route path="/signup" element={<SignupPage />} />
@@ -55,6 +55,9 @@ function App() {
             <Route path="/task/2" element={<Task2Page />} />
             <Route path="/task/3" element={<Task3Page />} />
             <Route path="/task/4" element={<Task4Page />} />
+
+            <Route path="/bot" element={<ChatbotPage />} />
+           
           </Routes>
         </div>
       </ScrollToTop>

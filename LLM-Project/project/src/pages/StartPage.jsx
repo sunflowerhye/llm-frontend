@@ -7,7 +7,6 @@ import styled, { createGlobalStyle, keyframes } from 'styled-components';
 import image1 from '../img/Sun.png';
 import image2 from '../img/StartPage2.jpg';
 import image5 from '../img/image5.png';
-import image4 from '../img/StartPage4.jpg';
 
 
 
@@ -260,6 +259,7 @@ const Section = styled.div`
 
 `;
 
+
 // Styled Link 컴포넌트 생성
 const StyledLink = styled(Link)`
   display: block; /* 블록 요소로 설정하여 전체 영역 클릭 가능 */
@@ -280,7 +280,41 @@ const StyledLink = styled(Link)`
   z-index: 1; /* 이미지 위에 표시되도록 설정 */
 `;
 
+const FadeInContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #ffffff;
+  animation: ${({ isVisible }) => (isVisible ? 'fadeIn 1s ease-in-out' : 'none')};
+`;
 
+const FadeInImageContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  max-width: 90%;
+  overflow: hidden;
+  animation: ${({ isVisible }) => (isVisible ? 'fadeIn 1.5s ease-in-out' : 'none')};
+`;
+
+const FadeInImage = styled.img`
+  max-width: 100%;
+  height: auto;
+  animation: ${({ isVisible }) => (isVisible ? 'fadeIn 2.0s ease-in-out' : 'none')};
+`;
+
+// 애니메이션 정의
+const fadeIn = keyframes`
+  0% {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+`;
 
 function StartPage() {
 
@@ -301,7 +335,58 @@ function StartPage() {
     const postsPerPage = 10; // 페이지당 게시글 수
     const totalPages = Math.ceil(totalPosts / postsPerPage); // 총 페이지 수 계산
 
-    
+    const [isVisible, setIsVisible] = useState(false);
+
+    // 초기 렌더링 시 localStorage에서 token 확인
+    useEffect(() => {
+      const storedToken = localStorage.getItem('token');
+      if (storedToken) {
+          setToken(storedToken);
+          setIsLoggedIn(true);
+      } else {
+          setIsLoggedIn(false);
+      }
+    }, []);
+
+    // token이 변경될 때마다 localStorage와 isLoggedIn 상태 업데이트
+    useEffect(() => {
+        if (token) {
+            localStorage.setItem('token', token);
+            setIsLoggedIn(true);
+        } else {
+            localStorage.removeItem('token');
+            setIsLoggedIn(false);
+        }
+    }, [token]);
+
+    useEffect(() => {
+      const observerOptions = {
+          root: null,
+          rootMargin: '0px',
+          threshold: 0.1
+      };
+
+      const observer = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+              if (entry.isIntersecting) {
+                  setIsVisible(true);
+              }
+          });
+      }, observerOptions);
+
+      const target = document.querySelector('.start-page-container');
+      if (target) {
+          observer.observe(target);
+      }
+
+      return () => {
+          if (target) {
+              observer.unobserve(target);
+          }
+      };
+  }, []);
+
+
 
   // 페이지 번호 변경 핸들러
   const handlePageChange = (pageNumber) => {
@@ -386,6 +471,21 @@ function StartPage() {
       observer.observe(section);
     });
 
+    document.addEventListener("DOMContentLoaded", () => {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("visible");
+            observer.unobserve(entry.target); // 애니메이션 1회만 실행
+          }
+        });
+      });
+    
+      document.querySelectorAll(".start-page-container").forEach((element) => {
+        observer.observe(element);
+      });
+    });
+    
 
     return () => {
       sections.forEach(section => {
@@ -405,7 +505,7 @@ function StartPage() {
 
                     <div style={{ display: 'flex', overflow: 'hidden', maxWidth: '100%', whiteSpace: 'nowrap' }}>
                         <img src={image1} alt="Image 1" className="left-image" style={{ width: '1300px', height: '600px', objectFit: 'cover', marginRight: '200px' }} />
-                        <img src={image5} alt="Image 2" className="right-image" style={{ width: '500px', height: '600px', objectFit: 'cover', marginRight: '0px' }} />
+                        <img src={image5} alt="Image 5" className="right-image" style={{ width: '500px', height: '600px', objectFit: 'cover', marginRight: '0px' }} />
                     </div>
 
                     <p style={{ position: 'absolute', right: '70px', top: '170px', fontSize: '50px' }}>
@@ -443,8 +543,7 @@ function StartPage() {
                     <StyledLink to="/taskui">
                          나만의 홍보 기획안 만들기
                     </StyledLink>                    
-                    <img src={image2} alt="Image 2" />
-
+                    <img src={image2} alt="Image 2" />          
                 </Section>
 
                 <Section className="section" id="section3" style={{ marginTop: '200px', padding: '20px', border: '1px solid #ccc', borderRadius: '5px' }}>
@@ -524,6 +623,12 @@ function StartPage() {
             )}
             {showModal && <div style={{ position: 'fixed', top: 0, left: 0, width: '100%', height: '100%', backgroundColor: 'rgba(0, 0, 0, 0.5)', zIndex: 999 }}></div>}
         </Section>
+            <FadeInContainer className="start-page-container" isVisible={isVisible}>
+              <FadeInImageContainer className="start-page-image-container" isVisible={isVisible}>
+                  <FadeInImage src={chatimg} alt="chat" className="start-page-image" isVisible={isVisible} />
+                </FadeInImageContainer>
+            </FadeInContainer>
+  
             </AllContainer>
         </>
     );

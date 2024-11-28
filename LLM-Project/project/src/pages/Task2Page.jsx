@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { saveAs } from 'file-saver';
-import { Document, Packer, Paragraph, TextRun, Table, TableRow, TableCell, WidthType } from 'docx';
+import { Document, Packer, Paragraph, TextRun, Table, TableRow, TableCell, WidthType, AlignmentType, VerticalAlign } from 'docx';
 import '../css/Task1Page.css';
 
 function Task2Page() {
@@ -11,7 +11,6 @@ function Task2Page() {
     const [fileContent, setFileContent] = useState('');
     const [fileName, setFileName] = useState('');
 
-    
     const [loading, setLoading] = useState(false);
     const [dragging, setDragging] = useState(false);
     const [error, setError] = useState('');
@@ -78,98 +77,168 @@ function Task2Page() {
             setLoading(false);
         }
     };
-    
+
+    const roundToFirstDecimal = (value) => {
+        return Math.round(value * 10) / 10;
+    };
+
     const handleDownload = async () => {
         if (!comparisonData) return;
+    
+        const table = new Table({
+            rows: [
+                new TableRow({
+                    children: [
+                        new TableCell({
+                            children: [
+                                new Paragraph({
+                                    text: "제품명",
+                                    alignment: AlignmentType.CENTER,
+                                }),
+                            ],
+                            width: { size: 20, type: WidthType.PERCENTAGE },
+                            verticalAlign: VerticalAlign.CENTER, 
+                        }),
+                        new TableCell({
+                            children: [
+                                new Paragraph({
+                                    text: comparisonData.product1.name,
+                                    alignment: AlignmentType.CENTER,
+                                }),
+                            ],
+                            width: { size: 40, type: WidthType.PERCENTAGE },
+                            verticalAlign: VerticalAlign.CENTER, 
+                        }),
+                        new TableCell({
+                            children: [
+                                new Paragraph({
+                                    text: comparisonData.product2.name,
+                                    alignment: AlignmentType.CENTER,
+                                }),
+                            ],
+                            width: { size: 40, type: WidthType.PERCENTAGE },
+                            verticalAlign: VerticalAlign.CENTER, 
+                        }),
+                    ],
+                }),
+                new TableRow({
+                    children: [
+                        new TableCell({
+                            children: [
+                                new Paragraph({
+                                    text: "유사도 점수",
+                                    alignment: AlignmentType.CENTER,
+                                }),
+                            ],
+                            verticalAlign: VerticalAlign.CENTER,
+                        }),
+                        new TableCell({
+                            children: [
+                                new Paragraph({
+                                    text: roundToFirstDecimal(comparisonData.product1.score).toString(),
+                                    alignment: AlignmentType.CENTER,
+                                }),
+                            ],
+                            verticalAlign: VerticalAlign.CENTER,
+                        }),
+                        new TableCell({
+                            children: [
+                                new Paragraph({
+                                    text: roundToFirstDecimal(comparisonData.product2.score).toString(),
+                                    alignment: AlignmentType.CENTER,
+                                }),
+                            ],
+                            verticalAlign: VerticalAlign.CENTER,
+                        }),
+                    ],
+                }),
+                new TableRow({
+                    children: [
+                        new TableCell({
+                            children: [
+                                new Paragraph({
+                                    text: "공통 성분",
+                                    alignment: AlignmentType.CENTER,
+                                }),
+                            ],
+                            verticalAlign: VerticalAlign.CENTER,
+                        }),
+                        new TableCell({
+                            children: [
+                                new Paragraph({
+                                    text: comparisonData.comparison.common_ingredients.join(', ') || '없음',
+                                    alignment: AlignmentType.CENTER,
+                                }),
+                            ],
+                            columnSpan: 2,
+                            verticalAlign: VerticalAlign.CENTER,
+                        }),
+                    ],
+                }),
+                new TableRow({
+                    children: [
+                        new TableCell({
+                            children: [
+                                new Paragraph({
+                                    text: "고유 성분",
+                                    alignment: AlignmentType.CENTER,
+                                }),
+                            ],
+                            verticalAlign: VerticalAlign.CENTER,
+                        }),
+                        new TableCell({
+                            children: [
+                                new Paragraph({
+                                    text: comparisonData.comparison.unique_to_product1.join(', ') || '없음',
+                                    alignment: AlignmentType.CENTER,
+                                }),
+                            ],
+                            verticalAlign: VerticalAlign.CENTER,
+                        }),
+                        new TableCell({
+                            children: [
+                                new Paragraph({
+                                    text: comparisonData.comparison.unique_to_product2.join(', ') || '없음',
+                                    alignment: AlignmentType.CENTER,
+                                }),
+                            ],
+                            verticalAlign: VerticalAlign.CENTER,
+                        }),
+                    ],
+                }),
+            ],
+        });
 
-            // 테이블 생성
-    const table = new Table({
-        rows: [
-            new TableRow({
-                children: [
-                    new TableCell({
-                        children: [new Paragraph("제품명")],
-                        width: { size: 20, type: WidthType.PERCENTAGE },
-                    }),
-                    new TableCell({
-                        children: [new Paragraph(comparisonData.product1.name)],
-                        width: { size: 40, type: WidthType.PERCENTAGE },
-                    }),
-                    new TableCell({
-                        children: [new Paragraph(comparisonData.product2.name)],
-                        width: { size: 40, type: WidthType.PERCENTAGE },
-                    }),
-                ],
-            }),
-            new TableRow({
-                children: [
-                    new TableCell({
-                        children: [new Paragraph("공통 성분")],
-                    }),
-                    new TableCell({
-                        children: [
-                            new Paragraph(
-                                comparisonData.comparison.common_ingredients.join(', ') || '없음'
-                            ),
-                        ],
-                    }),
-                    new TableCell({
-                        children: [
-                            new Paragraph(
-                                comparisonData.comparison.common_ingredients.join(', ') || '없음'
-                            ),
-                        ],
-                    }),
-                ],
-            }),
-            new TableRow({
-                children: [
-                    new TableCell({
-                        children: [new Paragraph("고유 성분")],
-                    }),
-                    new TableCell({
-                        children: [
-                            new Paragraph(
-                                comparisonData.comparison.unique_to_product1.join(', ') || '없음'
-                            ),
-                        ],
-                    }),
-                    new TableCell({
-                        children: [
-                            new Paragraph(
-                                comparisonData.comparison.unique_to_product2.join(', ') || '없음'
-                            ),
-                        ],
-                    }),
-                ],
-            }),
-        ],
-    });
+        const explanationHeading = new Paragraph({
+            children: [new TextRun("주요 성분 설명")],
+            heading: "Heading2", 
+            spacing: { before: 400, after: 200 }, 
+        });
 
-    // 주요 성분 설명 추가
-    const explanationParagraph = new Paragraph({
-        text: ingredientInfo || "주요 성분 설명이 없습니다.",
-        spacing: { before: 400, after: 400 }, // 표와 간격 추가
-    });
+        const explanationParagraph = new Paragraph({
+            text: ingredientInfo || "주요 성분 설명이 없습니다.",
+            spacing: { before: 400, after: 400 },
+        });
 
-    const doc = new Document({
-        sections: [
-            {
-                children: [
-                    new Paragraph({
-                        children: [new TextRun("성분 비교 결과")],
-                        heading: "Heading1",
-                    }),
-                    table,
-                    explanationParagraph, // 설명 추가
-                ],
-            },
-        ],
-    });
+        const doc = new Document({
+            sections: [
+                {
+                    children: [
+                        new Paragraph({
+                            children: [new TextRun("성분 비교 결과")],
+                            heading: "Heading1",
+                        }),
+                        table,
+                        explanationHeading,
+                        explanationParagraph,
+                    ],
+                },
+            ],
+        });
 
-    const blob = await Packer.toBlob(doc);
-    saveAs(blob, '성분비교결과.docx');
-};
+        const blob = await Packer.toBlob(doc);
+        saveAs(blob, '성분비교결과.docx');
+    };
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -259,6 +328,11 @@ function Task2Page() {
                             </tr>
                         </thead>
                         <tbody>
+                            <tr>
+                                <td>유사도 점수</td>
+                                <td>{roundToFirstDecimal(comparisonData.product1.score)}</td>
+                                <td>{roundToFirstDecimal(comparisonData.product2.score)}</td>
+                            </tr>
                             <tr>
                                 <td>공통 성분</td>
                                 <td colSpan="2">
