@@ -299,7 +299,51 @@ function StartPage() {
     const postsPerPage = 10; // 페이지당 게시글 수
     const totalPages = Math.ceil(totalPosts / postsPerPage); // 총 페이지 수 계산
 
-    
+    // 초기 렌더링 시 localStorage에서 token 확인
+    useEffect(() => {
+      const storedToken = localStorage.getItem('token');
+      if (storedToken) {
+          setToken(storedToken);
+          setIsLoggedIn(true);
+      } else {
+          setIsLoggedIn(false);
+      }
+    }, []);
+
+    // token이 변경될 때마다 localStorage와 isLoggedIn 상태 업데이트
+    useEffect(() => {
+        if (token) {
+            localStorage.setItem('token', token);
+            setIsLoggedIn(true);
+        } else {
+            localStorage.removeItem('token');
+            setIsLoggedIn(false);
+        }
+    }, [token]);
+
+//   useEffect(() => {
+//     const storedToken = localStorage.getItem('token');
+//     if (storedToken) {
+//         setToken(storedToken);
+//         setIsLoggedIn(true);
+//     } else {
+//         setIsLoggedIn(false);
+//     }
+// }, []); // 초기 렌더링 시 한 번만 실행
+
+//   useEffect(() => {
+//     const handleStorageChange = () => {
+//         const updatedToken = localStorage.getItem('token');
+//         setToken(updatedToken);
+//         setIsLoggedIn(!!updatedToken); // token이 있으면 true, 없으면 false
+//     };
+
+//     window.addEventListener('storage', handleStorageChange);
+//     return () => {
+//         window.removeEventListener('storage', handleStorageChange);
+//     };
+// }, []);
+
 
   // 페이지 번호 변경 핸들러
   const handlePageChange = (pageNumber) => {
