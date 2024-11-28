@@ -175,13 +175,11 @@ const Section = styled.div`
     align-items: flex-end;
     padding-right: 20px;
 
-    &.visible img {
-      opacity: 0.2; /* 반투명하게 설정 */
+    &.visible img {    
       position: absolute;
       top: 40px; /* 이미지를 아래로 20px 이동 */
       width: 97%; /* 이미지의 너비를 부모 요소의 100%로 설정 */
-      height: 70%; /* 이미지의 높이를 자동으로 조절 */
-       border-radius: 20%; /* 이미지를 동그랗게 만들기 */
+      height: 70%; /* 이미지의 높이를 자동으로 조절 */   
     }
 
     h1, p, h2, h6 {
