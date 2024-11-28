@@ -7,8 +7,8 @@ import styled, { createGlobalStyle, keyframes } from 'styled-components';
 import image1 from '../img/Sun.png';
 import image2 from '../img/StartPage2.jpg';
 import image5 from '../img/image5.png';
-import chatimg from '../img/startchat.png';
-import '../css/startchat.css';
+
+
 
 
 
@@ -502,7 +502,7 @@ function StartPage() {
 
                     <div style={{ display: 'flex', overflow: 'hidden', maxWidth: '100%', whiteSpace: 'nowrap' }}>
                         <img src={image1} alt="Image 1" className="left-image" style={{ width: '1300px', height: '600px', objectFit: 'cover', marginRight: '200px' }} />
-                        <img src={image5} alt="Image 2" className="right-image" style={{ width: '500px', height: '600px', objectFit: 'cover', marginRight: '0px' }} />
+                        <img src={image5} alt="Image 5" className="right-image" style={{ width: '500px', height: '600px', objectFit: 'cover', marginRight: '0px' }} />
                     </div>
 
                     <p style={{ position: 'absolute', right: '70px', top: '170px', fontSize: '50px' }}>
