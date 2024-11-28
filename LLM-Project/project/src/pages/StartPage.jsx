@@ -121,7 +121,7 @@ const Section = styled.div`
   img {
     width: 1000px; /* 고정 너비 설정 /
     height: 650px; / 고정 높이 설정 */
-    margin-top: 20px;
+    margin-top: 10px;
     opacity: 0.5;
     box-shadow: 0px 10px 20px rgba(255, 255, 255, 0.8);
     transition: opacity 2s ease-in-out;
@@ -202,10 +202,11 @@ const Section = styled.div`
     }
 
     p {
-      background-color: rgba(255, 255, 255, 0.7); /* 하얀색 반투명한 배경색 */
-      padding: 10px;
+      background-color: rgba(161, 98, 111, 0.7); /* A1626F 베이지색 반투명한 배경색 */
+      padding: 25px;
       border-radius: 30px; /* 동그란 테두리 */
-      top : 280px;
+      margin: 20px 30px; /* 상하 20px, 좌우 30px */
+      top : 220px;
       fontFamily: 'Noto Sans KR, sans-serif';
     }
 
@@ -218,6 +219,7 @@ const Section = styled.div`
 
   }
 
+  
   
 
   &#section3 {
@@ -256,24 +258,27 @@ const Section = styled.div`
 
 `;
 
-const LinkButtonStyle = styled(Link)`
-  color: #FBFDF5;
-  font-size: 2rem;
-  font-style: normal;
-  font-weight: 300;
-  line-height: normal;
-  margin-top: 100px;
-  padding: 20px;
-  cursor: pointer;
-  text-decoration: none;
-  border-radius: 50px; /* 동그란 테두리 */
-  border: 2px solid #eee; /* 겉에 흰 테두리 추가 */
-
-  &:hover {
-    color: #FFFFFF;
-    text-decoration: none;
-  }
+// Styled Link 컴포넌트 생성
+const StyledLink = styled(Link)`
+  display: block; /* 블록 요소로 설정하여 전체 영역 클릭 가능 */
+  background-color: rgba(161, 98, 111, 0.7); /* A1626F 베이지색 반투명한 배경색 */
+  padding: 25px;
+  border-radius: 30px; /* 동그란 테두리 */
+  margin: 20px 30px; /* 상하 20px, 좌우 30px */
+  width: 300px; /* 원하는 너비 설정 (예: 300px) */
+  position: absolute;
+  top: 750px; /* 원래 위치 유지 */
+  left: 49%;
+  transform: translateX(-50%); /* 가운데 정렬 */
+  font-family: 'Noto Sans KR', sans-serif; /* 폰트 설정 */
+  font-size: 20px; /* 글씨 크기 설정 (예: 24px) */
+  text-align: center; /* 텍스트 가운데 정렬 */
+  text-decoration: none; /* 기본 링크 스타일 제거 */
+  color: white; /* 텍스트 색상 */
+  z-index: 1; /* 이미지 위에 표시되도록 설정 */
 `;
+
+
 
 function StartPage() {
 
@@ -294,14 +299,7 @@ function StartPage() {
     const postsPerPage = 10; // 페이지당 게시글 수
     const totalPages = Math.ceil(totalPosts / postsPerPage); // 총 페이지 수 계산
 
-        // 로그인이 변경될 때마다 상태 업데이트
-    useEffect(() => {
-        const storedToken = localStorage.getItem('token');
-        if (storedToken) {
-            setIsLoggedIn(true);
-            setToken(storedToken);
-        }
-    }, []);
+    
 
   // 페이지 번호 변경 핸들러
   const handlePageChange = (pageNumber) => {
@@ -400,7 +398,7 @@ function StartPage() {
                 <GlobalStyle />
                 <Bar isLoggedIn={isLoggedIn} setToken={setToken} />
                 <Section className="section" id="section1">
-                    <h1 style={{ fontSize: '40px', fontWeight: 'normal', fontStyle: 'italic' }}>Promotion and planning</h1>
+                    <h1 style={{ top: '160px', fontSize: '40px', fontWeight: 'normal', fontStyle: 'italic' }}>Promotion and planning</h1>
                     <h1 style={{ top: '230px', marginLeft: '350px', fontSize: '55px', fontStyle: 'italic' }}>In Beauty Sync</h1>
 
                     <div style={{ display: 'flex', overflow: 'hidden', maxWidth: '100%', whiteSpace: 'nowrap' }}>
@@ -408,22 +406,22 @@ function StartPage() {
                         <img src={image5} alt="Image 2" className="right-image" style={{ width: '500px', height: '600px', objectFit: 'cover', marginRight: '0px' }} />
                     </div>
 
-                    <p style={{ position: 'absolute', right: '70px', top: '200px', fontSize: '50px' }}>
+                    <p style={{ position: 'absolute', right: '70px', top: '170px', fontSize: '50px' }}>
                         <span style={{ fontSize: '48px', color: '#072715d5', fontFamily: '"Noto Serif KR", serif', writingMode: 'vertical-rl', transform: 'rotate(0deg)', whiteSpace: 'nowrap' }}>
                             뷰티 홍보 기획 서비스
                         </span>
                     </p>
 
                     
-                    <p style={{ position: 'absolute', right: '160px', top: '370px', fontSize: '30px' }}>
+                    <p style={{ position: 'absolute', right: '160px', top: '280px', fontSize: '30px' }}>
                     <span style={{ fontSize: '30px', color: '#1f4e33b0', fontFamily: 'Noto Sans KR, sans-serif' }}>
                         " </span>
                     </p>
-                    <p style={{ position: 'absolute', right: '150px', top: '400px', fontSize: '30px' }}>
+                    <p style={{ position: 'absolute', right: '150px', top: '310px', fontSize: '30px' }}>
                     <span style={{ fontSize: '25px', color: '#1f4e33b0', fontFamily: '"Noto Serif KR", serif', writingMode: 'vertical-rl', transform: 'rotate(0deg)', whiteSpace: 'nowrap' }}>
                         당 신 의  브 랜 드 를  빛 나 게 할 솔 루 션 </span>
                     </p>
-                    <p style={{ position: 'absolute', right: '156px', top: '860px', fontSize: '30px' }}>
+                    <p style={{ position: 'absolute', right: '156px', top: '770px', fontSize: '30px' }}>
                     <span style={{ fontSize: '30px', color: '#1f4e33b0', fontFamily: 'Noto Sans KR, sans-serif' }}>
                         " </span>
                     </p>
@@ -440,11 +438,9 @@ function StartPage() {
                     <h2 style={{ position: 'absolute',  left: '830px', top: '570px' }}>둘째,</h2>
                     <h2 style={{ position: 'absolute',  left: '530px', top: '620px' }}>Beauty Sync은 제품들을<span style={{  textDecoration: 'underline', color: '#78172C' }}> 효과적으로 홍보</span>할 수 있습니다.</h2>
                     
-                    <h4 style={{ textAlign: 'center', position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', marginTop: '320px', WebkitTextStroke: '1px rgba(255, 255, 255, 0.5)' }}>원하는 홍보 이벤트 기획을 해보세요</h4>
-                    <h4 style={{ textAlign: 'center', position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', marginTop: '350px', WebkitTextStroke: '1px rgba(255, 255, 255, 0.5)' }}>Beauty Sync이 함께합니다.</h4>
-
-                    <h3 style={{ textAlign: 'center', position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', marginTop: '400px' }}> Beauty Sync에 궁금하신 사항이 있으신가요? </h3>
-
+                    <StyledLink to="/taskui">
+                         나만의 홍보 기획안 만들기
+                    </StyledLink>                    
                     <img src={image2} alt="Image 2" />
 
                 </Section>
