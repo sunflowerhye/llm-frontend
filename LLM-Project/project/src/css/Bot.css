@@ -57,7 +57,7 @@
   
   /* User message styling */
   .user {
-    background-color: #b3e7ff;
+    background-color: #cdefff;
     align-self: flex-end;
     font-family: 'Noto Sans KR';
   }
@@ -75,7 +75,7 @@
   
   /* Assistant message styling */
   .assistant {
-    background-color: #aeadad;
+    background-color: #c6c6c6;
     align-self: flex-start;
     font-family: 'Noto Sans KR';
   }
@@ -100,7 +100,7 @@
   }
   
   /* Button styling */
-  .button {
+  .askbutton {
     width: 10%;
     padding: 10px;
     margin: 20px;
@@ -111,6 +111,7 @@
     margin-left: 1px;
     cursor: pointer;
     font-family: 'Noto Sans KR';
+    font-size: 18px;
   }
   
   /* Input field styling */
@@ -129,6 +130,7 @@
     margin: 10px;
     margin-left: 20px;
     margin-top: 20px;
+    font-size: 25px;
     font-family: 'Noto Sans KR';
   }
   
@@ -156,13 +158,14 @@
     width: 100px;
     padding: 10px;
     margin: 10px;
-    background-color: #FFFFFF;
+    background-color: #fefefe;
     color: Black;
-    border: none;
-    border-radius: 12px;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 20px;
     cursor: pointer;
+    font-size: 15px;
     font-family: 'Noto Sans KR';
-    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+    box-shadow: 2px 2px 3px rgba(47, 47, 47, 0.2);
     transition: background-color 0.3s;
   }
   

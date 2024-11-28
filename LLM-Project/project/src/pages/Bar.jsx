@@ -30,12 +30,14 @@ const menuStyle = {
     display: 'flex',
     alignItems: 'center',
     gap: '2em',
+    fontSize: '18px',
 };
 
 const loginStyle = {
     display: 'flex',
     alignItems: 'center',
     gap: '1.5em',
+    fontSize: '18px',
 };
 
 const buttonStyle = {
