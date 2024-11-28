@@ -1,0 +1,172 @@
+/* Chat container */
+.chatcontainer {
+    margin: 40px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    background-color: #FFFFFF;
+  }
+  
+  /* Chat list styling */
+  .chatlist {
+    margin: 10px;
+    display: flex;
+    flex-wrap: wrap; /* 버튼들이 줄을 넘어가도 정렬됨 */
+    gap: 5px; /* 버튼 간 간격 조정 */
+    justify-content: center; /* 가로 방향 가운데 정렬 */
+    align-items: center; /* 세로 방향 가운데 정렬 */
+  }
+  
+  /* Chat window styling */
+  .chatWindow {
+    background-color: #f0f0f0b9;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    padding: 10px;
+    height: 600px;
+    overflow-y: scroll;
+    margin: 20px;
+    margin-top: 10px;
+    margin-bottom: 0px;
+  }
+  
+  /* Message container styling */
+  .messageContainer {
+    border-radius: 10px;
+    margin: 10px;
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+  }
+  
+  /* Input container styling */
+  .inputContainer {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+  }
+  
+  /* Message bubble styling */
+  .message {
+    margin-bottom: 10px;
+    padding: 8px 12px;
+    border-radius: 18px;
+    box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.326);
+    max-width: 80%;
+    position: relative;
+  }
+  
+  /* User message styling */
+  .user {
+    background-color: #b3e7ff;
+    align-self: flex-end;
+    font-family: 'Noto Sans KR';
+  }
+  
+  /* Arrow for user message */
+  .userAfter {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    right: -5px;
+    border-width: 10px;
+    border-style: solid;
+    border-color: transparent transparent #b3e7ff transparent;
+  }
+  
+  /* Assistant message styling */
+  .assistant {
+    background-color: #aeadad;
+    align-self: flex-start;
+    font-family: 'Noto Sans KR';
+  }
+  
+  /* Arrow for assistant message */
+  .assistantAfter {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: -5px;
+    border-width: 10px;
+    border-style: solid;
+    border-color: transparent transparent #aeadad;
+  }
+  
+  /* User name styling */
+  .userName {
+    font-size: 12px;
+    font-weight: bold;
+    color: #666;
+    margin-bottom: 5px;
+  }
+  
+  /* Button styling */
+  .button {
+    width: 10%;
+    padding: 10px;
+    margin: 20px;
+    background-color: #0a0c0fd4;
+    border: none;
+    color: white;
+    border-radius: 10px;
+    margin-left: 1px;
+    cursor: pointer;
+    font-family: 'Noto Sans KR';
+  }
+  
+  /* Input field styling */
+  .input {
+    border-radius: 10px;
+    width: 90%;
+    padding: 10px;
+    margin: 20px;
+    font-family: 'Noto Sans KR';
+  }
+  
+  /* Header styling */
+  .chatHeader {
+    text-align: left;
+    color: black;
+    margin: 10px;
+    margin-left: 20px;
+    margin-top: 20px;
+    font-family: 'Noto Sans KR';
+  }
+  
+  /* Assistant name styling */
+  .assistantName {
+    font-size: 12px;
+    font-weight: bold;
+    color: #666;
+    margin-bottom: 5px;
+  }
+  
+  /* New chat button styling */
+  .newchatbutton {
+    width: 100px;
+    background-color: #0a0c0fd4;
+    border: none;
+    color: white;
+    border-radius: 10px;
+    cursor: pointer;
+    font-family: 'Noto Sans KR';
+  }
+  
+  /* Keywords button styling */
+  .keywordsbutton {
+    width: 100px;
+    padding: 10px;
+    margin: 10px;
+    background-color: #FFFFFF;
+    color: Black;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    font-family: 'Noto Sans KR';
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+    transition: background-color 0.3s;
+  }
+  
+  .keywordsbutton:hover {
+    background-color: #f0f0f0;
+  }
+  
