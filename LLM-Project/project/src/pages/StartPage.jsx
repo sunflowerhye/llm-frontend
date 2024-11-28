@@ -7,6 +7,7 @@ import styled, { createGlobalStyle, keyframes } from 'styled-components';
 import image1 from '../img/Sun.png';
 import image2 from '../img/StartPage2.jpg';
 import image5 from '../img/image5.png';
+import image4 from '../img/StartPage4.jpg';
 
 
 
@@ -178,9 +179,10 @@ const Section = styled.div`
     &.visible img {
       opacity: 0.2; /* 반투명하게 설정 */
       position: absolute;
-      top: 40px; /* 이미지를 아래로 20px 이동 */
-      width: 97%; /* 이미지의 너비를 부모 요소의 100%로 설정 */
-      height: 70%; /* 이미지의 높이를 자동으로 조절 */
+      top: 220px; /* 이미지를 아래로 20px 이동 */
+      width: 50%; /* 이미지의 너비를 부모 요소의 100%로 설정 */
+      height: 60%; /* 이미지의 높이를 자동으로 조절 */
+      left:25px;
        border-radius: 20%; /* 이미지를 동그랗게 만들기 */
     }
 
